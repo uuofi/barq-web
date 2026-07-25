@@ -1,0 +1,166 @@
+/**
+ * Coverage section styles — same `--web-*` marketing tokens as the rest of
+ * the merged home page. Tinted surface, alternating with MerchantsSection's
+ * plain white below it for visual rhythm (About[dark] → Coverage[tinted] →
+ * Merchants[white] → Drivers[tinted] → FAQ[white], see HomePage.tsx).
+ */
+
+.section {
+  background-color: var(--web-surface-alt);
+  padding-block: var(--space-3xl);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  color: var(--web-text-on-light);
+}
+
+.intro {
+  max-inline-size: 40rem;
+  margin: var(--space-md) auto 0;
+  font-size: var(--text-md);
+  color: var(--web-text-on-light-muted);
+  line-height: var(--leading-normal);
+}
+
+.image {
+  inline-size: 100%;
+  max-inline-size: 40rem;
+  block-size: auto;
+  margin: var(--space-2xl) auto 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: block;
+}
+
+.cityGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-block-start: var(--space-2xl);
+}
+
+.cityCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  inline-size: 12rem;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  background-color: var(--web-surface);
+  border: 1px solid var(--web-divider-light);
+}
+
+.cityIconWrap {
+  inline-size: 3.25rem;
+  block-size: 3.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--web-gradient-primary);
+  color: var(--web-text-on-dark);
+  box-shadow: var(--web-shadow-cta);
+}
+
+.cityIcon {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+
+.cityName {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.cityBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-success);
+}
+
+.cityBadgeIcon {
+  inline-size: 1em;
+  block-size: 1em;
+}
+
+.expansionNote {
+  margin: var(--space-xl) auto 0;
+  max-inline-size: 34rem;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  background-color: var(--web-surface);
+  border: 1px dashed var(--web-divider-light);
+  font-size: var(--text-sm);
+  color: var(--web-text-on-light-muted);
+  line-height: var(--leading-normal);
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-block-start: var(--space-2xl);
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  padding: 0.9rem 1.75rem;
+  border-radius: var(--radius-md);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.ctaPrimary {
+  background: var(--web-gradient-primary);
+  color: var(--web-text-on-dark);
+  box-shadow: var(--web-shadow-cta);
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgb(124 58 237 / 0.45);
+}
+
+.ctaSecondary {
+  background-color: transparent;
+  color: var(--web-primary-strong);
+  border: 1.5px solid var(--web-primary);
+}
+
+.ctaSecondary:hover {
+  background-color: var(--web-primary-soft);
+}
+
+.ctaIcon {
+  inline-size: 1.2em;
+  block-size: 1.2em;
+}
+
+@media (max-width: 33.9975rem) {
+  .ctaActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    justify-content: center;
+  }
+}

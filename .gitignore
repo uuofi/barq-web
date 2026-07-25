@@ -6,6 +6,6 @@ dist-ssr
 .env.*
 !.env.example
 *.tsbuildinfo
-coverage
+/coverage
 .DS_Store
 .vite
