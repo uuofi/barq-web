@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
  *
  * Structure only — no spinner design. What matters architecturally is the
  * accessibility contract: `role="status"` + `aria-live="polite"` announce the
- * load to a screen reader, and the visible text is the announcement rather
+ * load to a screen reader, and the vsible text is the announcement rather
  * than a separate visually-hidden duplicate.
  */
 export const PageLoader = () => {
