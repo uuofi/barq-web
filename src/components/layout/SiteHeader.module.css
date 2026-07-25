@@ -1,0 +1,156 @@
+/**
+ * Header — matches the approved home page design exactly.
+ *
+ * The header uses a fixed left-to-right slot order (logo far left, primary
+ * action far right) that does NOT flip with the page's RTL text direction —
+ * this is the specific layout in the approved design, not a generic RTL
+ * mirror. `.inner` is pinned to `direction: ltr` for that reason; `.nav`
+ * re-establishes `direction: rtl` inside so the Arabic labels still read in
+ * natural order (see the comment on `.nav` below).
+ */
+
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-header);
+  background-color: var(--web-ink-soft);
+  border-block-end: 1px solid var(--web-ink-border);
+}
+
+.inner {
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  block-size: 4.75rem;
+}
+
+/* --- Brand --------------------------------------------------------------- */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-dark);
+  flex-shrink: 0;
+}
+
+.brandIcon {
+  inline-size: 1.4em;
+  block-size: 1.4em;
+  color: var(--web-primary-light);
+}
+
+/* --- Nav ------------------------------------------------------------------
+   `direction: rtl` here means the FIRST <li> in markup (nav.home) renders at
+   the right edge of this block — i.e. closest to the CTA button, exactly as
+   in the approved design — while later items step further left toward the
+   logo. This is independent of `.inner`'s own ltr slot order above. */
+
+.nav {
+  direction: rtl;
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.navLink {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--web-text-on-dark-muted);
+  padding-block: var(--space-xs);
+  transition: color var(--duration-base) var(--ease-out);
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--web-text-on-dark);
+}
+
+.navLink[aria-current='page'] {
+  color: var(--web-primary-light);
+}
+
+/* --- CTA ------------------------------------------------------------------ */
+
+.cta {
+  direction: rtl;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+  background: var(--web-gradient-primary);
+  color: var(--web-text-on-dark);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  padding: 0.65rem 1.375rem;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--web-shadow-cta);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 36px rgb(124 58 237 / 0.45);
+}
+
+.ctaIcon {
+  inline-size: 1.1em;
+  block-size: 1.1em;
+}
+
+/* --- Mobile toggle & panel -------------------------------------------------
+   Not part of the approved desktop screenshot, but required for the header
+   to function below the breakpoint where the nav list can no longer fit. */
+
+.menuToggle {
+  display: none;
+  color: var(--web-text-on-dark);
+  padding: var(--space-xs);
+}
+
+@media (max-width: 63.9975rem) {
+  .nav {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-start: 4.75rem;
+    background-color: var(--web-ink-soft);
+    border-block-end: 1px solid var(--web-ink-border);
+    padding-block: var(--space-md);
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out);
+  }
+
+  .nav[data-open='true'] {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .navList {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-md);
+    padding-inline: var(--container-gutter);
+  }
+
+  .menuToggle {
+    display: inline-flex;
+  }
+}

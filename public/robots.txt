@@ -1,0 +1,11 @@
+# Al-Barq public website
+# Note: per-page indexing is also controlled at runtime by <Seo noIndex> —
+# see src/app/router/routes.tsx (`sitemap.include`).
+
+User-agent: *
+Allow: /
+
+# Order tracking result pages are per-order and unbounded; never index them.
+Disallow: /track/
+
+Sitemap: https://barq-iq.site/sitemap.xml

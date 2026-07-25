@@ -1,0 +1,394 @@
+{
+  "common": {
+    "appName": "Al-Barq",
+    "tagline": "Fast. Safe. Reliable",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "close": "Close",
+    "search": "Search",
+    "readMore": "Read more",
+    "backHome": "Back to home",
+    "skipToContent": "Skip to content",
+    "comingSoon": "Coming soon"
+  },
+
+  "nav": {
+    "home": "Home",
+    "merchants": "For merchants",
+    "drivers": "For drivers",
+    "about": "About Al-Barq",
+    "coverage": "Coverage areas",
+    "services": "Services",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "download": "Get the app",
+    "trackOrder": "Track order",
+    "submitRequest": "Submit a request",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language"
+  },
+
+  "footer": {
+    "rights": "All rights reserved",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "coverage": "Coverage areas"
+  },
+
+  "errors": {
+    "generic": "Something went wrong",
+    "network": "Could not reach the server — check your connection",
+    "notFound": "Page not found",
+    "notFoundBody": "The link is invalid or the page has moved",
+    "serverError": "Server error",
+    "boundaryTitle": "This section failed to render",
+    "boundaryBody": "An error occurred while rendering the page. Try reloading.",
+    "reload": "Reload page",
+    "featureDisabled": "This service is not available yet"
+  },
+
+  "forms": {
+    "required": "This field is required",
+    "invalidPhone": "Invalid phone number (07xxxxxxxxx)",
+    "invalidEmail": "Invalid email address",
+    "tooShort": "Too short",
+    "tooLong": "Too long",
+    "submitting": "Submitting...",
+    "successTitle": "Submitted successfully",
+    "errorTitle": "Submission failed"
+  },
+
+  "consent": {
+    "message": "We use cookies to improve your experience and measure site performance.",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+
+  "home": {
+    "heroTagline": "Fast delivery, we care about your experience",
+    "ctaDriver": "Sign up as a driver",
+    "ctaMerchant": "Sign up as a merchant",
+
+    "whyTitle": "Why Al-Barq?",
+    "feature": {
+      "fastDelivery": "Fast delivery",
+      "trustedSafety": "Trusted safety",
+      "liveTracking": "Live tracking",
+      "dailyOrders": "High daily volume",
+      "support": "24-hour support"
+    },
+
+    "stat": {
+      "orders": "orders completed",
+      "drivers": "drivers",
+      "merchants": "merchants",
+      "satisfaction": "customer satisfaction"
+    },
+
+    "howTitle": "How Al-Barq works",
+    "forDriver": "For drivers",
+    "forMerchant": "For merchants",
+    "driverStep": {
+      "receiveOrder": "Receive the order",
+      "headToPickup": "Head to pickup",
+      "deliver": "Deliver",
+      "collectEarnings": "Collect earnings"
+    },
+    "merchantStep": {
+      "createOrder": "Create an order",
+      "confirmOrder": "Order confirmed",
+      "driverPickup": "Driver picks up",
+      "delivered": "Delivered"
+    }
+  },
+
+  "about": {
+    "hero": {
+      "title": "About Al-Barq",
+      "description": "Al-Barq is a digital delivery platform connecting merchants, drivers, and customers in one place. We built it to be the fastest and most trusted way to deliver across Iraq, and every day we keep improving an experience built on speed, safety, and transparency for everyone involved. Every order deserves to arrive on time, and every partner deserves tools that make their work easier and more profitable."
+    },
+
+    "journeyTitle": "Our journey",
+    "journey": {
+      "growth": {
+        "hijri": "1447 AH",
+        "title": "Operational growth",
+        "description": "We grew daily order volume and expanded our network of drivers and merchant partners across several governorates."
+      },
+      "launch": {
+        "hijri": "1447 AH",
+        "title": "Platform launch",
+        "description": "We officially launched Al-Barq with a driver app, a merchant app, and a full admin dashboard."
+      },
+      "expansion": {
+        "hijri": "1447 AH",
+        "title": "Expansion & rollout",
+        "description": "We expanded coverage to new governorates and launched real-time order tracking."
+      },
+      "future": {
+        "hijri": "And beyond",
+        "title": "The future",
+        "description": "Our goal is to cover every governorate in Iraq and keep expanding with smart solutions for our partners and customers."
+      }
+    },
+
+    "vision": {
+      "title": "Our vision",
+      "description": "To be the leading platform for fast, trusted delivery in Iraq — the first choice for every merchant and driver looking for a partner who understands their needs."
+    },
+    "mission": {
+      "title": "Our mission",
+      "description": "We deliver smart, fast delivery solutions that serve merchants, drivers, and customers with the highest standards of quality, transparency, and professionalism."
+    },
+
+    "valuesTitle": "Our values",
+    "value": {
+      "speed": "Speed",
+      "security": "Security",
+      "transparency": "Transparency",
+      "innovation": "Innovation",
+      "teamwork": "Teamwork"
+    },
+
+    "cta": {
+      "title": "Join us now and be part of our success",
+      "driverButton": "Sign up as a driver",
+      "merchantButton": "Apply as a merchant"
+    }
+  },
+
+  "coverage": {
+    "hero": {
+      "title": "The cities we serve",
+      "description": "We cover wide areas across Iraq to be closer to you"
+    },
+    "imageAlt": "Map of Iraq showing Diwaniyah and Najaf governorates as active areas within the Al-Barq delivery service",
+    "listTitle": "Governorates available now",
+    "available": "Available now",
+    "expansion": {
+      "title": "More areas coming soon",
+      "description": "We're steadily expanding coverage to more governorates across Iraq — follow us to be the first to know when a new area goes live."
+    },
+    "cta": {
+      "title": "Is your city within our coverage? Join us now",
+      "driverButton": "Sign up as a driver",
+      "merchantButton": "Apply as a merchant"
+    }
+  },
+
+  "merchants": {
+    "title": "For merchants",
+    "intro": "Grow your store with Al-Barq — receive delivery orders, track your sales, and reach more customers every day from one easy dashboard.",
+    "benefit": {
+      "fastDelivery": "Fast delivery",
+      "support": "Ongoing support",
+      "dashboard": "Easy dashboard",
+      "earnings": "Track earnings"
+    },
+    "cta": "Apply as a merchant"
+  },
+
+  "drivers": {
+    "title": "For drivers",
+    "intro": "Work flexibly and earn daily with Al-Barq — accept nearby orders, deliver them, and collect your earnings easily through the app.",
+    "benefit": {
+      "nearbyOrders": "Nearby orders",
+      "support": "Ongoing support",
+      "flexibleHours": "Flexible hours",
+      "dailyEarnings": "Daily earnings"
+    },
+    "cta": "Sign up as a driver"
+  },
+
+  "faq": {
+    "intro": "Common questions from merchants, drivers, and customers."
+  },
+
+  "legal": {
+    "lastUpdated": "Last updated:",
+
+    "privacy": {
+      "sections": {
+        "intro": {
+          "title": "Introduction",
+          "p1": "This Privacy Policy explains what data the Al-Barq delivery platform (\"Al-Barq\", \"we\") collects from users of this website and the merchant and driver apps, how we use and protect it, and who we share it with. Using any of our services means you agree to the practices described here."
+        },
+        "accountData": {
+          "title": "Account data",
+          "intro": "When you create a merchant or driver account, we collect:",
+          "item1": "Your name and phone number — the phone number is your primary sign-in identifier.",
+          "item2": "Your email address, if you provide one.",
+          "item3": "Your password, stored encrypted so no staff member can ever see it in its original form.",
+          "item4": "The governorate your account operates in — used to keep each governorate's orders separate, and not something you can change yourself after registration."
+        },
+        "profileData": {
+          "title": "Additional data for merchants and drivers",
+          "item1": "For merchants: store name, pickup location on the map, a text address, and business type.",
+          "item2": "For drivers: vehicle type and plate number, and your live location while your account is active — used only to match you with the nearest order and to show your position to the merchant during delivery.",
+          "item3": "For drivers as well: your daily attendance log and its fee, and your performance stats (deliveries completed, earnings, and ratings)."
+        },
+        "orderData": {
+          "title": "Order data",
+          "p1": "Every delivery order includes the order value, the amount to collect, the payment method (cash on delivery today), the merchant's notes, and a timeline of status changes.",
+          "p2": "The merchant enters their customer's details for that order (phone number, delivery address, and location) for one purpose only: letting the driver deliver it. Al-Barq does not create a customer account and does not keep this data for any purpose beyond fulfilling and following up on that order.",
+          "p3": "When an order is delivered, the driver may record a proof-of-delivery photo and the recipient's name."
+        },
+        "pushTokens": {
+          "title": "Push notifications",
+          "p1": "To send instant notifications about new orders and status updates, we register your device's push notification identifier (Expo Push Token) and its platform. This identifier does not reveal your identity and is used solely to deliver Al-Barq notifications."
+        },
+        "cookies": {
+          "title": "Cookies",
+          "p1": "Our website uses optional analytics cookies solely to measure page performance. They are only enabled after your explicit consent via the banner shown on your first visit, and you can withdraw that consent at any time."
+        },
+        "howWeUse": {
+          "title": "How we use your data",
+          "item1": "Operating your account, sign-in, and identity verification.",
+          "item2": "Matching delivery orders with the nearest available driver in the same governorate.",
+          "item3": "Letting the merchant and driver complete a delivery and communicate about it.",
+          "item4": "Calculating earnings and fees, and building reports for merchants, drivers, and admins.",
+          "item5": "Sending notifications about orders and your account.",
+          "item6": "Responding to your questions and providing support.",
+          "item7": "Improving the service and its security, and detecting misuse.",
+          "item8": "Complying with any legal or regulatory obligation."
+        },
+        "sharing": {
+          "title": "Sharing your data",
+          "p1": "Al-Barq does not sell your data to any third party.",
+          "p2": "We share the minimum necessary data between the two sides of each order: a driver sees the merchant's and customer's details for the order assigned to them only, and a merchant sees their assigned driver's details (name, phone, vehicle type) once the order is accepted.",
+          "p3": "We may share limited data with the technical service providers we rely on to run the platform (such as our notification service and server hosting), bound to using it for no other purpose.",
+          "p4": "We may disclose limited data if lawfully required by a competent authority under applicable Iraqi law."
+        },
+        "security": {
+          "title": "Data security",
+          "p1": "We protect your data by encrypting passwords, restricting access to sensitive data by each user's role (merchant, driver, admin), and keeping each governorate's data separate within the dispatch system. That said, no system can guarantee absolute, 100% security."
+        },
+        "retention": {
+          "title": "Data retention",
+          "p1": "We keep your account and order data for as long as you use the platform, and for a further period after your account is closed, to the extent needed for accounting purposes or to resolve a possible dispute over a past order. Closing an account disables access to it rather than immediately deleting its order history, to preserve the integrity of other parties' records tied to those same orders."
+        },
+        "rights": {
+          "title": "Your rights",
+          "item1": "Access and review your core data through your app.",
+          "item2": "Request correction of any inaccurate data in your profile.",
+          "item3": "Request that your account be closed and your data no longer used operationally, by contacting us.",
+          "item4": "Withdraw your consent to analytics cookies at any time from the website."
+        },
+        "minors": {
+          "title": "Minors",
+          "p1": "Our services are intended for merchants and drivers who are 18 or older and legally able to enter into binding agreements; we do not knowingly target minors."
+        },
+        "changes": {
+          "title": "Changes to this policy",
+          "p1": "We may update this policy from time to time to reflect changes to the service or legal requirements. Any material change will be published on this page along with an updated \"last updated\" date."
+        },
+        "contact": {
+          "title": "Contact us",
+          "p1": "For any question about your privacy, or to exercise any of the rights above, contact us using the details shown in the site footer."
+        }
+      }
+    },
+
+    "terms": {
+      "sections": {
+        "acceptance": {
+          "title": "Acceptance of these terms",
+          "p1": "Using the Al-Barq website or the merchant and driver apps means you fully accept these Terms & Conditions. If you do not agree with any part of them, please stop using the service."
+        },
+        "serviceDefinition": {
+          "title": "What the service is",
+          "p1": "Al-Barq is a delivery platform connecting merchants who need orders delivered to their customers with independent drivers who carry out those deliveries, through two separate apps and an admin dashboard. Al-Barq is an intermediary that organises the delivery — it is not a party to the commercial contract between a merchant and their customer."
+        },
+        "coverageArea": {
+          "title": "Geographic coverage",
+          "p1": "Al-Barq's service currently covers Diwaniyah and Najaf governorates only, with further governorates planned over time (see the \"Coverage areas\" page). A merchant's or driver's account is tied to a single governorate at registration and cannot be changed by the account holder."
+        },
+        "eligibility": {
+          "title": "Eligibility to register",
+          "item1": "You must be 18 or older and have the legal capacity to enter into a contract.",
+          "item2": "You must provide accurate, up-to-date information at registration (name, phone number, and business or vehicle details).",
+          "item3": "You must not share your sign-in credentials with anyone else."
+        },
+        "merchantObligations": {
+          "title": "Merchant obligations",
+          "item1": "Provide accurate order details (order value, pickup address, and product details).",
+          "item2": "Enter your customer's details (phone and address) accurately and with their consent to share them with the assigned driver for delivery purposes only.",
+          "item3": "Have the order ready and matching what was entered in the system when the driver arrives for pickup.",
+          "item4": "Follow the cancellation policy: free before a driver accepts the order, subject to Al-Barq's terms after acceptance."
+        },
+        "driverObligations": {
+          "title": "Driver obligations",
+          "item1": "Register your daily attendance through the admin-run process — this is what unlocks your ability to accept orders.",
+          "item2": "Meet pickup and delivery times, and contact the merchant or support immediately about any delay or issue.",
+          "item3": "Maintain professional, safe conduct while driving and while handling orders and customers.",
+          "item4": "Hand over the full amount collected from the customer (cash on delivery) to the merchant per the agreed process, and accurately record any amount still held with you.",
+          "item5": "Avoid repeatedly rejecting or abandoning orders without cause, as it affects your rating and account standing."
+        },
+        "feesAndPayment": {
+          "title": "Fees & payment",
+          "p1": "A daily attendance-registration fee may apply to drivers, as set by Al-Barq's admin team, and is shown to you when your attendance for that day is registered.",
+          "p2": "Payment between a merchant and their customer currently happens via cash on delivery; Al-Barq does not process any electronic payment or handle payment card data directly.",
+          "p3": "Merchants are responsible for factoring the delivery fee agreed with Al-Barq into the pricing shown to them."
+        },
+        "cancellation": {
+          "title": "Cancellation & failed orders",
+          "p1": "A merchant may cancel an order free of charge before it is accepted by any driver. After acceptance, a cancellation or a delivery that cannot be completed (customer unreachable, refused, etc.) is recorded in the system as \"failed\" with a reason, and may trigger action under Al-Barq's internal policy."
+        },
+        "ratingsAndBlocking": {
+          "title": "Ratings & blocking",
+          "p1": "After an order is delivered, the merchant may rate the driver's performance from 1 to 5 stars with an optional comment. Ratings are used to measure service quality and cannot be edited once submitted.",
+          "p2": "A merchant may block a specific driver from receiving their future orders, without affecting that driver's access to other merchants' orders.",
+          "p3": "Al-Barq reserves the right to suspend or disable any account that violates these terms, is misused, or is found by our system administrators to have submitted inaccurate information."
+        },
+        "intellectualProperty": {
+          "title": "Intellectual property",
+          "p1": "All trademarks, logos, and website/app content are owned by Al-Barq Delivery Company and may not be copied or reused without prior written permission."
+        },
+        "liability": {
+          "title": "Limitation of liability",
+          "p1": "Al-Barq is an organising platform connecting merchants and drivers, and makes reasonable efforts to ensure delivery quality, but is not responsible for an order's contents or the quality of a product supplied by a merchant, nor for indirect loss arising from a delay or circumstance reasonably beyond its control (such as weather, connectivity outages, or road conditions)."
+        },
+        "governingLaw": {
+          "title": "Governing law",
+          "p1": "These terms are governed by and construed in accordance with the laws of the Republic of Iraq, and the courts of Iraq have jurisdiction over any dispute arising from them, unless otherwise agreed."
+        },
+        "changes": {
+          "title": "Changes to these terms",
+          "p1": "Al-Barq may update these terms from time to time; continuing to use the service after a change is published constitutes acceptance of it. We will post the \"last updated\" date at the top of this page."
+        },
+        "contact": {
+          "title": "Contact us",
+          "p1": "For any question about these terms, contact us using the details shown in the site footer."
+        }
+      }
+    }
+  },
+
+  "seo": {
+    "titleTemplate": "{{title}} — Al-Barq",
+    "home": {
+      "description": "Al-Barq delivery platform in Iraq — request a driver for your store, track orders in real time, and manage earnings in one place."
+    },
+    "merchants": {
+      "description": "Grow your store with Al-Barq — receive orders, track sales, and reach more customers every day."
+    },
+    "drivers": {
+      "description": "Join Al-Barq drivers — accept nearby orders, deliver them, and earn more every day."
+    },
+    "about": {
+      "description": "Learn about the Al-Barq delivery platform — our story, vision, mission, and the values we work by every day."
+    },
+    "coverage": {
+      "description": "Al-Barq delivery coverage areas in Iraq — see which governorates are active today and what's coming next."
+    },
+    "privacy": {
+      "description": "Al-Barq delivery platform privacy policy — what data we collect from merchants, drivers, and delivery orders, and how we use and protect it."
+    },
+    "terms": {
+      "description": "Terms & Conditions for using the Al-Barq delivery platform as a merchant or driver, including fees, cancellation, and blocking policy."
+    }
+  }
+}

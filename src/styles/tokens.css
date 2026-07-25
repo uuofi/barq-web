@@ -1,0 +1,149 @@
+/**
+ * Design tokens — the single source of truth for every visual value.
+ *
+ * These are ARCHITECTURE, not design: no page is styled here. The point is
+ * that when the design phase starts, it changes values in this file rather
+ * than scattering hex codes across twelve components — which is exactly the
+ * problem the mobile app documented about itself (every screen redefining its
+ * own local PALETTE object, drifting between 0.12 and 0.35 border alpha).
+ *
+ * The palette below mirrors the app's dark/gold identity so web and mobile
+ * read as one product. Values traced from تصميم-الصفحات.md §1.1.
+ *
+ * Logical properties (inline-start/end) are used throughout instead of
+ * left/right so the Arabic RTL default and the English LTR mode share one
+ * stylesheet with no mirrored overrides.
+ */
+
+:root {
+  /* --- Color: surfaces ------------------------------------------------- */
+  --color-bg: #0a0d10;
+  --color-surface: #12171b;
+  --color-surface-raised: #1b2126;
+  --color-surface-hero: #15130a;
+
+  /* --- Color: brand ---------------------------------------------------- */
+  --color-accent: #f2b705; /* gold — merchant world, primary CTA */
+  --color-accent-contrast: #12171b; /* text on gold */
+  --color-driver: #22c55e; /* green — driver world */
+
+  /* --- Color: text ----------------------------------------------------- */
+  --color-text: #f5f6f7;
+  --color-text-muted: #8b9198;
+  --color-text-placeholder: #5b6167;
+
+  /* --- Color: state ---------------------------------------------------- */
+  --color-success: #22c55e;
+  --color-danger: #f87171;
+  --color-danger-soft: rgb(248 113 113 / 0.14);
+  --color-info: #60a5fa;
+
+  /* --- Color: lines ---------------------------------------------------- */
+  --color-border: rgb(242 183 5 / 0.16);
+  --color-border-strong: rgb(242 183 5 / 0.35);
+  --color-divider: rgb(242 183 5 / 0.12);
+  --color-overlay: rgb(0 0 0 / 0.6);
+
+  /* --- Spacing: 4px base scale, matching the app's theme/index.ts ------- */
+  --space-xs: 0.25rem; /* 4  */
+  --space-sm: 0.5rem; /* 8  */
+  --space-md: 1rem; /* 16 */
+  --space-lg: 1.5rem; /* 24 */
+  --space-xl: 2rem; /* 32 */
+  --space-2xl: 3rem; /* 48 */
+  --space-3xl: 4.5rem; /* 72 — section rhythm, web-only */
+
+  /* --- Radius ---------------------------------------------------------- */
+  --radius-sm: 0.5rem; /* 8  */
+  --radius-md: 0.75rem; /* 12 */
+  --radius-lg: 1rem; /* 16 */
+  --radius-pill: 999px;
+
+  /* --- Typography ------------------------------------------------------ */
+  --font-sans: 'Cairo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fluid scale: min at 360px viewport, max at 1280px. clamp() means the
+     site has no typographic breakpoints to maintain. */
+  --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
+  --text-md: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --text-lg: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-xl: clamp(1.75rem, 1.5rem + 1.2vw, 2.5rem);
+  --text-2xl: clamp(2.25rem, 1.8rem + 2.2vw, 3.5rem);
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 800;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.6; /* Arabic needs more leading than Latin. */
+
+  /* --- Layout ---------------------------------------------------------- */
+  --container-narrow: 44rem; /* long-form legal text */
+  --container-default: 72rem;
+  --container-wide: 88rem;
+  --container-gutter: var(--space-lg);
+
+  /* --- Elevation ------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 0.35);
+  --shadow-lg: 0 12px 40px rgb(0 0 0 / 0.45);
+
+  /* --- Motion ---------------------------------------------------------- */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 360ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* --- Z-index: a named scale, so no component invents z-index: 9999 --- */
+  --z-base: 0;
+  --z-sticky: 100;
+  --z-header: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/**
+ * The brand is dark-only by design — the mobile app forces a dark identity
+ * regardless of OS setting, and the site matches. If a light theme is ever
+ * wanted, it belongs here as a `:root[data-theme='light']` block overriding
+ * the surface/text tokens; no component code would change.
+ */
+
+/**
+ * Web marketing tokens — the approved home page design.
+ *
+ * These are DISTINCT from the gold/green tokens above, which mirror the
+ * mobile app's in-app screens. The public website's own visual identity
+ * (confirmed by the delivery jacket/box artwork in the hero photograph) is a
+ * dark navy-black canvas with a violet/indigo accent — not gold. Marketing
+ * surfaces (header, hero, sections) use the `--web-*` tokens; do not mix the
+ * two systems on the same element.
+ */
+:root {
+  --web-ink: #06060f; /* page/hero background */
+  --web-ink-soft: #0b0b1c; /* header, card surfaces on dark */
+  --web-ink-border: rgb(124 92 246 / 0.18);
+
+  --web-primary: #7c3aed;
+  --web-primary-strong: #6d28d9;
+  --web-primary-soft: rgb(124 58 237 / 0.14);
+  --web-primary-light: #a78bfa;
+
+  --web-surface: #ffffff;
+  --web-surface-alt: #f6f4fd;
+
+  --web-text-on-dark: #ffffff;
+  --web-text-on-dark-muted: #b7b3cf;
+  --web-text-on-light: #15132b;
+  --web-text-on-light-muted: #66627d;
+
+  --web-gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+
+  --web-radius-icon: 1rem;
+  --web-shadow-cta: 0 12px 32px rgb(124 58 237 / 0.35);
+  --web-divider-light: rgb(21 19 43 / 0.1);
+}

@@ -1,0 +1,80 @@
+/**
+ * FAQ section — same `--web-*` marketing tokens as the rest of the merged
+ * home page. Native <details>/<summary> accordion, styled to match the
+ * card language used elsewhere on the page (see AboutSection.module.css's
+ * `.journeyCard`).
+ */
+
+.section {
+  background-color: var(--web-surface);
+  padding-block: var(--space-3xl);
+}
+
+.title {
+  text-align: center;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  color: var(--web-text-on-light);
+}
+
+.intro {
+  max-inline-size: 34rem;
+  margin: var(--space-md) auto 0;
+  text-align: center;
+  font-size: var(--text-md);
+  color: var(--web-text-on-light-muted);
+  line-height: var(--leading-normal);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-block-start: var(--space-2xl);
+}
+
+.details {
+  border: 1px solid var(--web-divider-light);
+  border-radius: var(--radius-lg);
+  background-color: var(--web-surface-alt);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.details[open] {
+  border-color: var(--web-primary);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.chevron {
+  flex-shrink: 0;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  color: var(--web-primary);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.details[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.answer {
+  margin-block-start: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--web-text-on-light-muted);
+  line-height: var(--leading-normal);
+}

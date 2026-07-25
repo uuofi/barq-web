@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://barq-iq.site/</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://barq-iq.site/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://barq-iq.site/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://barq-iq.site/" />
+  </url>
+  <url>
+    <loc>https://barq-iq.site/download</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://barq-iq.site/download?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://barq-iq.site/download?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://barq-iq.site/download" />
+  </url>
+  <url>
+    <loc>https://barq-iq.site/contact</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://barq-iq.site/contact?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://barq-iq.site/contact?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://barq-iq.site/contact" />
+  </url>
+  <url>
+    <loc>https://barq-iq.site/legal/terms</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://barq-iq.site/legal/terms?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://barq-iq.site/legal/terms?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://barq-iq.site/legal/terms" />
+  </url>
+  <url>
+    <loc>https://barq-iq.site/legal/privacy</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://barq-iq.site/legal/privacy?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://barq-iq.site/legal/privacy?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://barq-iq.site/legal/privacy" />
+  </url>
+</urlset>

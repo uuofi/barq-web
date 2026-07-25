@@ -1,0 +1,21 @@
+# SPA fallback for Netlify / Cloudflare Pages.
+#
+# NOTE: production actually runs on CloudPanel/nginx (see DEPLOYMENT.md), so
+# nginx never reads this file — the equivalent `try_files` rule is configured
+# directly in the CloudPanel vhost. This file is kept for portability, in
+# case the site is ever mirrored to Netlify/Cloudflare Pages.
+#
+# Every unknown path must serve index.html so the client router can handle it —
+# without this, a hard refresh on /merchants returns a real 404.
+#
+# The 200 status is what makes it a rewrite rather than a redirect (the URL in
+# the address bar is preserved). The trade-off: genuinely unknown paths also
+# return 200, which is why NotFoundPage sets `noIndex` — see
+# src/features/errors/NotFoundPage.tsx.
+#
+# On other hosts the equivalent is:
+#   nginx    → try_files $uri $uri/ /index.html;   (this is what CloudPanel uses)
+#   Vercel   → { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+#   Apache   → FallbackResource /index.html
+
+/*    /index.html   200
