@@ -24,6 +24,7 @@ const HomePage = lazy(() => import('@/features/home/HomePage'));
 const ContactPage = lazy(() => import('@/features/contact/ContactPage'));
 const DownloadPage = lazy(() => import('@/features/download/DownloadPage'));
 const TrackingPage = lazy(() => import('@/features/tracking/TrackingPage'));
+const DeleteAccountPage = lazy(() => import('@/features/account/DeleteAccountPage'));
 const TermsPage = lazy(() => import('@/features/legal/TermsPage'));
 const PrivacyPage = lazy(() => import('@/features/legal/PrivacyPage'));
 const NotFoundPage = lazy(() => import('@/features/errors/NotFoundPage'));
@@ -146,6 +147,20 @@ export const routeMeta: RouteMeta[] = [
     sitemap: { include: false },
     enabled: env.features.orderTracking,
     element: TrackingPage,
+  },
+  {
+    path: paths.account.delete,
+    titleKey: 'account.delete.title',
+    descriptionKey: 'seo.deleteAccount.description',
+    // Indexed on purpose. Google Play and the App Store both require the
+    // account-deletion URL to be publicly reachable and discoverable without
+    // installing the app, so unlike the other utility pages this one belongs
+    // in the sitemap. Low priority — it is a destination, not a landing page.
+    sitemap: { include: true, priority: 0.3, changeFrequency: 'yearly' },
+    // NOT feature-flagged: POST /public/account/delete is live, and a store
+    // reviewer opening a flagged-off deletion page is a rejected submission.
+    enabled: true,
+    element: DeleteAccountPage,
   },
   {
     path: paths.legal.terms,

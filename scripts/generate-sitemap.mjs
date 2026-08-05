@@ -36,6 +36,10 @@ const ROUTES = [
   { path: '/contact', priority: 0.5, changefreq: 'yearly' },
   { path: '/legal/terms', priority: 0.3, changefreq: 'yearly' },
   { path: '/legal/privacy', priority: 0.3, changefreq: 'yearly' },
+  // Account deletion. Indexed on purpose — Google Play and the App Store
+  // require this URL to be publicly reachable and discoverable without the
+  // app installed, so it must appear here even though it sells nothing.
+  { path: '/account/delete', priority: 0.3, changefreq: 'yearly' },
 ];
 
 const LANGUAGES = ['ar', 'en'];
@@ -66,8 +70,10 @@ ${ROUTES.map(urlEntry).join('\n')}
 `;
 
 /**
- * Drift guard: every path listed above must appear in paths.ts. This is what
- * turns the duplication into a caught error instead of a silent divergence.
+ * Drift guard, both directions.
+ *
+ * (1) Every path listed above must exist in paths.ts — catches a typo or a URL
+ *     that was renamed in the app but not here.
  */
 const pathsSource = readFileSync(join(projectRoot, 'src/app/router/paths.ts'), 'utf8');
 const missing = ROUTES.map((route) => route.path).filter(
@@ -77,6 +83,28 @@ const missing = ROUTES.map((route) => route.path).filter(
 if (missing.length > 0) {
   console.error(
     `sitemap: these paths are not defined in src/app/router/paths.ts:\n  ${missing.join('\n  ')}`
+  );
+  process.exit(1);
+}
+
+/**
+ * (2) The COUNT here must match the number of `include: true` entries in the
+ *     route registry — catches the opposite mistake, which the check above
+ *     cannot see: a route declaring itself sitemap-worthy in routes.tsx that
+ *     nobody added to the list here, so it silently never gets crawled.
+ *
+ *     A count rather than a parse: routes.tsx is TSX, Node cannot import it
+ *     without a build step (see the file header), and a regex that tried to
+ *     extract paths from JSX would be the fragile thing here. The count is
+ *     enough — it fails the build and points at the file to reconcile.
+ */
+const routesSource = readFileSync(join(projectRoot, 'src/app/router/routes.tsx'), 'utf8');
+const declaredIncluded = (routesSource.match(/include:\s*true/g) || []).length;
+
+if (declaredIncluded !== ROUTES.length) {
+  console.error(
+    `sitemap: routes.tsx declares ${declaredIncluded} route(s) with sitemap.include === true, ` +
+      `but this script lists ${ROUTES.length}. Reconcile ROUTES above with src/app/router/routes.tsx.`
   );
   process.exit(1);
 }

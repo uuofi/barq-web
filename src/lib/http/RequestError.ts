@@ -20,6 +20,13 @@ export interface ApiFailurePayload {
   message?: string;
   errors?: FieldError[];
   code?: string;
+  /**
+   * Structured payload the backend attaches to certain coded failures — e.g.
+   * how many orders are still in flight on an ACCOUNT_HAS_ACTIVE_ORDERS
+   * refusal. Shape varies BY `code`, so it stays `unknown` here and each
+   * feature parses it with the Zod schema for the code it is handling.
+   */
+  details?: unknown;
 }
 
 /** `status: 0` is reserved for "the request never reached the server". */
@@ -29,18 +36,22 @@ export class RequestError extends Error {
   readonly status: number;
   readonly fieldErrors: FieldError[];
   readonly code: string | undefined;
+  /** See ApiFailurePayload.details — parse it against the schema for `code`. */
+  readonly details: unknown;
 
   constructor(
     message: string,
     status: number,
     fieldErrors: FieldError[] = [],
-    code?: string
+    code?: string,
+    details?: unknown
   ) {
     super(message);
     this.name = 'RequestError';
     this.status = status;
     this.fieldErrors = fieldErrors;
     this.code = code;
+    this.details = details;
 
     // Keeps `instanceof RequestError` working when the class is transpiled
     // down to ES5 by a consumer toolchain.

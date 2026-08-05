@@ -39,6 +39,12 @@ export const SiteFooter = () => {
           <li>
             <Link to={paths.legal.privacy}>{t('footer.privacy')}</Link>
           </li>
+          <li>
+            {/* Reachable from every page: the app stores expect the deletion
+                URL to be findable from the site itself, not only from a link
+                buried in the app's settings. */}
+            <Link to={paths.account.delete}>{t('account.delete.title')}</Link>
+          </li>
         </ul>
       </nav>
 

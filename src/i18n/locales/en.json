@@ -207,6 +207,77 @@
     "intro": "Common questions from merchants, drivers, and customers."
   },
 
+  "account": {
+    "delete": {
+      "title": "Delete account",
+      "lead": "You can delete your Al-Barq account here directly — no app required, and no support ticket. Read what happens first: once the recovery window closes, the step is permanent.",
+
+      "effects": {
+        "title": "What happens when you delete",
+        "removed": {
+          "title": "Permanently removed",
+          "item1": "Your name, phone number, email address, and photo",
+          "item2": "Your store name, address, and pickup point (merchants)",
+          "item3": "Your plate number and last recorded location (drivers)",
+          "item4": "App notifications on every one of your devices — they stop immediately"
+        },
+        "kept": {
+          "title": "Kept",
+          "item1": "The record of past orders and their values",
+          "item2": "The attendance-fee and payment ledger (drivers)",
+          "note": "These records are kept with nothing tying them back to you personally. They belong to the other parties on an order and are needed for accounting and for settling any later dispute."
+        },
+        "timeline": "Your account stops working the moment you confirm: no sign-in, no notifications, no presence on the platform. Your personal data is erased permanently 30 days later — and only during that window can support restore an account deleted by mistake."
+      },
+
+      "requirements": {
+        "title": "Before you start",
+        "item1": "No orders may still be in progress on your account — complete or cancel them first.",
+        "item2": "No unpaid attendance fees, if you are a driver."
+      },
+
+      "form": {
+        "title": "Confirm deletion",
+        "phoneLabel": "Registered phone number",
+        "passwordLabel": "Password",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password",
+        "confirmLabel": "Type \"{{word}}\" to confirm",
+        "confirmMismatch": "Type the word \"حذف\" exactly to continue",
+        "submit": "Delete my account permanently",
+        "footnote": "Your password is used only to confirm you own this account. It is not stored, and this attempt is not logged."
+      },
+
+      "errors": {
+        "invalidCredentials": "That phone number or password is incorrect. Check the number you registered with.",
+        "throttled": "Too many attempts from this device. Wait an hour and try again, or contact support.",
+        "generic": "The request could not be completed right now. Check your connection and try again.",
+        "activeOrders": {
+          "title": "You have orders in progress",
+          "body": "Your account cannot be deleted while {{count}} order(s) are still open. Complete or cancel them in the app, then come back here."
+        },
+        "outstandingBalance": {
+          "title": "You have unpaid fees",
+          "body": "You owe {{amount}} in unpaid attendance fees ({{count}} day(s)). Contact support to settle the balance, then try again."
+        }
+      },
+
+      "done": {
+        "title": "Your account has been deleted",
+        "lead": "Your account was disabled immediately. It can no longer sign in or receive notifications.",
+        "deactivatedLabel": "Disabled on",
+        "purgeLabel": "Data permanently erased on",
+        "undoNote": "If this was a mistake, contact support within {{days}} days to restore the account. After that date it cannot be recovered."
+      },
+
+      "support": {
+        "title": "Can't complete the deletion?",
+        "body": "If you have forgotten your password or the form will not work for you, reach us on any channel below and we will delete your account once we have verified your identity.",
+        "privacyLink": "Read the privacy policy"
+      }
+    }
+  },
+
   "legal": {
     "lastUpdated": "Last updated:",
 
@@ -268,13 +339,18 @@
         },
         "retention": {
           "title": "Data retention",
-          "p1": "We keep your account and order data for as long as you use the platform, and for a further period after your account is closed, to the extent needed for accounting purposes or to resolve a possible dispute over a past order. Closing an account disables access to it rather than immediately deleting its order history, to preserve the integrity of other parties' records tied to those same orders."
+          "p1": "We keep your account and order data for as long as you use the platform. When you delete your account it stops working immediately, and your personal data — name, phone number, email, photo, and store or vehicle details — is erased permanently 30 days after the deletion request. What remains afterwards is the order and financial records with nothing tying them back to you personally, to the extent needed for accounting purposes or to resolve a possible dispute over a past order, and to preserve the integrity of other parties' records tied to those same orders."
+        },
+        "deletion": {
+          "title": "Deleting your account",
+          "p1": "You can delete your account yourself at any time from the account deletion page on this website, or from the \"Delete account\" section in your app's settings, which takes you there. All you need is your registered phone number and your password; no approval step stands in the way.",
+          "p2": "Deletion cannot complete while orders are still in progress on your account, or while attendance fees remain unpaid if you are a driver — both are temporary and clear once the orders finish or the balance is settled. If the page will not work for you for any reason, contact support and we will delete the account once we have verified your identity."
         },
         "rights": {
           "title": "Your rights",
           "item1": "Access and review your core data through your app.",
           "item2": "Request correction of any inaccurate data in your profile.",
-          "item3": "Request that your account be closed and your data no longer used operationally, by contacting us.",
+          "item3": "Delete your account and personal data yourself at any time from the account deletion page, without contacting us.",
           "item4": "Withdraw your consent to analytics cookies at any time from the website."
         },
         "minors": {
@@ -389,6 +465,9 @@
     },
     "terms": {
       "description": "Terms & Conditions for using the Al-Barq delivery platform as a merchant or driver, including fees, cancellation, and blocking policy."
+    },
+    "deleteAccount": {
+      "description": "Delete your Al-Barq account here — see exactly what data is removed, what is kept, and when it is erased permanently."
     }
   }
 }

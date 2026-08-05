@@ -63,6 +63,18 @@ export const ENDPOINT_REGISTRY = meta({
     status: 'planned',
     note: 'Needs POST /public/contact with a rate limiter. Gate behind VITE_FEATURE_LEAD_FORMS.',
   },
+
+  deleteAccount: {
+    path: '/public/account/delete',
+    status: 'live',
+    note:
+      'The one public WRITE this site performs, and the only place it sends a password. Identity is ' +
+      'proven with phone + password (there is no session here); the backend soft-deletes immediately ' +
+      'and scrubs the personal data after a grace period — see ' +
+      'delivery-backend/src/services/accountDeletion.service.js. Throttled server-side to 5 attempts ' +
+      'per IP per hour, so no client-side retry loop belongs on top of it. NOT feature-flagged: the ' +
+      'app stores require this page to work unconditionally.',
+  },
 });
 
 export type EndpointKey = keyof typeof ENDPOINT_REGISTRY;

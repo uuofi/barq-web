@@ -11,9 +11,9 @@ import { env } from './env';
  */
 export const site = {
   /** The wordmark as it actually appears on brand assets (jacket, delivery box, logo lockup). */
-  name: 'البرق',
+  name: 'برق',
   nameEn: 'Al-Barq',
-  legalName: 'شركة البرق للتوصيل',
+  legalName: 'شركة برق للتوصيل',
 
   /** Matches `common.appTagline` in the mobile app. */
   tagline: 'سريع. آمن. موثوق',

@@ -28,6 +28,16 @@ export const paths = {
     byCode: (code: string) => `/track/${encodeURIComponent(code.trim().toUpperCase())}`,
   },
 
+  account: {
+    /**
+     * Self-service account deletion. The app links here from both settings
+     * screens, and Google Play / the App Store require this URL to be
+     * reachable WITHOUT installing the app — so it must stay a stable,
+     * top-level, publicly crawlable path. Do not move it lightly.
+     */
+    delete: '/account/delete',
+  },
+
   legal: {
     terms: '/legal/terms',
     privacy: '/legal/privacy',

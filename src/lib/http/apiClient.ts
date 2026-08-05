@@ -39,7 +39,8 @@ apiClient.interceptors.response.use(
           data?.message || 'حدث خطأ أثناء تنفيذ الطلب',
           status,
           data?.errors ?? [],
-          data?.code
+          data?.code,
+          data?.details
         )
       );
     }

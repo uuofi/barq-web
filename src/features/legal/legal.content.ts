@@ -96,6 +96,17 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
     paragraphKeys: ['legal.privacy.sections.retention.p1'],
   },
   {
+    // Sits directly after retention on purpose: one states how long data is
+    // kept, the next states how a user ends that themselves. The page it
+    // describes is `paths.account.delete`.
+    id: 'deletion',
+    titleKey: 'legal.privacy.sections.deletion.title',
+    paragraphKeys: [
+      'legal.privacy.sections.deletion.p1',
+      'legal.privacy.sections.deletion.p2',
+    ],
+  },
+  {
     id: 'rights',
     titleKey: 'legal.privacy.sections.rights.title',
     listKeys: [
