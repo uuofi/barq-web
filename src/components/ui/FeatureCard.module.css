@@ -1,0 +1,106 @@
+/**
+ * The white feature card and the grid it lives in.
+ *
+ * Used by the services grid (3×2), the "why Al-Barq" row (4-up), the values
+ * row (5-up) and the how-it-works benefits (4-up). One component, four column
+ * counts — the grid is `auto-fit` driven rather than hard-coded per page, so
+ * every one of them collapses to a single column at the same breakpoint
+ * without any page declaring a media query of its own.
+ */
+
+.grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(var(--feature-columns, 3), minmax(0, 1fr));
+}
+
+/* Below ~64rem the requested column count is always too many. Two columns is
+   the intermediate step for 3-, 4- and 5-up grids alike. */
+@media (max-width: 64rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 40rem) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+}
+
+/* --- Card --------------------------------------------------------------- */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  background-color: var(--web-surface);
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--web-card-shadow);
+  text-align: start;
+  block-size: 100%;
+  transition:
+    box-shadow var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+/* Hover lift is applied only where a pointer can actually hover, so a touch
+   device never gets stuck showing the hover state after a tap. */
+@media (hover: hover) {
+  .interactive:hover {
+    border-color: var(--web-card-border-strong);
+    box-shadow: var(--web-card-shadow-hover);
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition-duration: 1ms;
+  }
+  .interactive:hover {
+    transform: none;
+  }
+}
+
+.onDark {
+  background-color: var(--web-ink-card);
+  border-color: var(--web-ink-card-border);
+  box-shadow: none;
+  color: var(--web-text-on-dark);
+}
+
+/* Centred variant — the "why Al-Barq" and "values" rows stack the medallion
+   above centred text instead of using the default start-aligned card. */
+.centered {
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.onDark .title {
+  color: var(--web-text-on-dark);
+}
+
+.body {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--web-text-on-light-muted);
+}
+
+.onDark .body {
+  color: var(--web-text-on-dark-muted);
+}
+
+.badge {
+  margin-block-end: var(--space-xs);
+}

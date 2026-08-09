@@ -1,5 +1,4 @@
 import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
 import { paths, routePatterns } from './paths';
 import { env } from '@/config/env';
 
@@ -17,31 +16,35 @@ import { env } from '@/config/env';
  *    still resolves, but renders its unavailable state (see FeatureGate).
  *
  * Every page is `lazy()` — marketing pages are independent, and a visitor who
- * lands on /download should never download the order-tracking bundle.
+ * lands on /pricing should never download the application-wizard bundle.
+ *
+ * NOTE: the site used to be a single scrolling home page with About /
+ * Coverage / Merchants / Drivers as anchored sections of `/`. It is now a
+ * real multi-page site, matching the approved design: each of those is its
+ * own route with its own hero, its own closing CTA and its own sitemap entry.
+ * The old `#anchor` redirects are gone because the paths they redirected to
+ * are the live pages again.
  */
 
 const HomePage = lazy(() => import('@/features/home/HomePage'));
+const AboutPage = lazy(() => import('@/features/about/AboutPage'));
+const ServicesPage = lazy(() => import('@/features/services/ServicesPage'));
+const MerchantsPage = lazy(() => import('@/features/merchants/MerchantsPage'));
+const DriversPage = lazy(() => import('@/features/drivers/DriversPage'));
+const HowItWorksPage = lazy(() => import('@/features/how-it-works/HowItWorksPage'));
+const CoveragePage = lazy(() => import('@/features/coverage/CoveragePage'));
+const PricingPage = lazy(() => import('@/features/pricing/PricingPage'));
+const BlogPage = lazy(() => import('@/features/blog/BlogPage'));
 const ContactPage = lazy(() => import('@/features/contact/ContactPage'));
+const DriverApplyPage = lazy(() => import('@/features/apply/DriverApplyPage'));
+const MerchantApplyPage = lazy(() => import('@/features/apply/MerchantApplyPage'));
+const ApplySuccessPage = lazy(() => import('@/features/apply/ApplySuccessPage'));
 const DownloadPage = lazy(() => import('@/features/download/DownloadPage'));
 const TrackingPage = lazy(() => import('@/features/tracking/TrackingPage'));
 const DeleteAccountPage = lazy(() => import('@/features/account/DeleteAccountPage'));
 const TermsPage = lazy(() => import('@/features/legal/TermsPage'));
 const PrivacyPage = lazy(() => import('@/features/legal/PrivacyPage'));
 const NotFoundPage = lazy(() => import('@/features/errors/NotFoundPage'));
-
-/**
- * About/Coverage/Merchants/Drivers/FAQ used to be (or, for Coverage, could
- * have been) standalone routes. They are now sections of the single
- * scrolling home page (see `AboutSection.tsx` etc., rendered from
- * `HomePage.tsx`) — but the OLD urls must not 404: any link already shared
- * or indexed still lands on the right place, just via a client-side
- * redirect to the matching anchor.
- */
-const RedirectToAbout = () => <Navigate to={`${paths.home}#about`} replace />;
-const RedirectToCoverage = () => <Navigate to={`${paths.home}#coverage`} replace />;
-const RedirectToMerchants = () => <Navigate to={`${paths.home}#merchants`} replace />;
-const RedirectToDrivers = () => <Navigate to={`${paths.home}#drivers`} replace />;
-const RedirectToFaq = () => <Navigate to={`${paths.home}#faq`} replace />;
 
 /** How a route relates to search engines. */
 export interface SitemapMeta {
@@ -74,55 +77,113 @@ export const routeMeta: RouteMeta[] = [
     descriptionKey: 'seo.home.description',
     sitemap: { include: true, priority: 1.0, changeFrequency: 'weekly' },
     enabled: true,
+    inMainNav: true,
     element: HomePage,
-  },
-  {
-    // Now a section of `/` (see AboutSection.tsx via HomePage.tsx) — this
-    // entry only exists so the old URL redirects instead of 404ing.
-    path: paths.merchants,
-    titleKey: 'nav.merchants',
-    sitemap: { include: false },
-    enabled: true,
-    element: RedirectToMerchants,
-  },
-  {
-    path: paths.drivers,
-    titleKey: 'nav.drivers',
-    sitemap: { include: false },
-    enabled: true,
-    element: RedirectToDrivers,
   },
   {
     path: paths.about,
     titleKey: 'nav.about',
-    sitemap: { include: false },
+    descriptionKey: 'seo.about.description',
+    sitemap: { include: true, priority: 0.7, changeFrequency: 'monthly' },
     enabled: true,
-    element: RedirectToAbout,
+    inMainNav: true,
+    element: AboutPage,
   },
   {
-    // Now a section of `/` (see CoverageSection.tsx via HomePage.tsx) — this
-    // entry only exists so the old URL redirects instead of 404ing.
+    path: paths.services,
+    titleKey: 'nav.services',
+    descriptionKey: 'seo.services.description',
+    sitemap: { include: true, priority: 0.9, changeFrequency: 'monthly' },
+    enabled: true,
+    inMainNav: true,
+    element: ServicesPage,
+  },
+  {
+    path: paths.merchants,
+    titleKey: 'nav.merchants',
+    descriptionKey: 'seo.merchants.description',
+    sitemap: { include: true, priority: 0.9, changeFrequency: 'monthly' },
+    enabled: true,
+    inMainNav: true,
+    element: MerchantsPage,
+  },
+  {
+    path: paths.drivers,
+    titleKey: 'nav.drivers',
+    descriptionKey: 'seo.drivers.description',
+    sitemap: { include: true, priority: 0.9, changeFrequency: 'monthly' },
+    enabled: true,
+    inMainNav: true,
+    element: DriversPage,
+  },
+  {
+    path: paths.blog,
+    titleKey: 'nav.blog',
+    descriptionKey: 'seo.blog.description',
+    sitemap: { include: true, priority: 0.6, changeFrequency: 'weekly' },
+    enabled: true,
+    inMainNav: true,
+    element: BlogPage,
+  },
+  {
+    path: paths.pricing,
+    titleKey: 'nav.pricing',
+    descriptionKey: 'seo.pricing.description',
+    sitemap: { include: true, priority: 0.8, changeFrequency: 'monthly' },
+    enabled: true,
+    inMainNav: true,
+    element: PricingPage,
+  },
+  {
+    path: paths.howItWorks,
+    titleKey: 'nav.howItWorks',
+    descriptionKey: 'seo.howItWorks.description',
+    sitemap: { include: true, priority: 0.7, changeFrequency: 'monthly' },
+    enabled: true,
+    element: HowItWorksPage,
+  },
+  {
     path: paths.coverage,
-    titleKey: 'footer.coverage',
-    sitemap: { include: false },
+    titleKey: 'nav.coverage',
+    descriptionKey: 'seo.coverage.description',
+    sitemap: { include: true, priority: 0.7, changeFrequency: 'monthly' },
     enabled: true,
-    element: RedirectToCoverage,
-  },
-  {
-    path: paths.faq,
-    titleKey: 'nav.faq',
-    sitemap: { include: false },
-    enabled: true,
-    element: RedirectToFaq,
+    element: CoveragePage,
   },
   {
     path: paths.contact,
     titleKey: 'nav.contact',
+    descriptionKey: 'seo.contact.description',
     sitemap: { include: true, priority: 0.5, changeFrequency: 'yearly' },
     // Depends on POST /public/contact, which the backend does not expose yet.
     enabled: env.features.leadForms,
-    inMainNav: true,
     element: ContactPage,
+  },
+  {
+    path: paths.apply.driver,
+    titleKey: 'apply.driver.title',
+    descriptionKey: 'seo.applyDriver.description',
+    sitemap: { include: true, priority: 0.8, changeFrequency: 'yearly' },
+    enabled: env.features.leadForms,
+    element: DriverApplyPage,
+  },
+  {
+    path: paths.apply.merchant,
+    titleKey: 'apply.merchant.title',
+    descriptionKey: 'seo.applyMerchant.description',
+    sitemap: { include: true, priority: 0.8, changeFrequency: 'yearly' },
+    enabled: env.features.leadForms,
+    element: MerchantApplyPage,
+  },
+  {
+    path: paths.apply.success,
+    titleKey: 'apply.success.title',
+    // A confirmation page has no standalone value in search results, and
+    // indexing it would put "تم استلام طلبك" in front of people who never
+    // applied. It is reachable only by finishing a funnel.
+    sitemap: { include: false },
+    enabled: env.features.leadForms,
+    element: ApplySuccessPage,
   },
   {
     path: paths.download,

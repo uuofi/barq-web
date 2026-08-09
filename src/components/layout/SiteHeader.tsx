@@ -1,48 +1,80 @@
-import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { paths } from '@/app/router/paths';
 import { site } from '@/config/site';
-import { BoltIcon, PersonIcon, MenuIcon, CloseIcon } from '@/components/icons';
+import { PersonIcon, MenuIcon, CloseIcon } from '@/components/icons';
 import Container from './Container';
+import Logo from './Logo';
 import styles from './SiteHeader.module.css';
 
 /**
- * Primary navigation — pixel-matched to the approved home page design.
+ * Primary navigation.
  *
- * The site is a single scrolling page: Home / About / Coverage / Services /
- * Merchants / Drivers / FAQ are all sections of `/`, not separate routes, so
- * every item but Home anchors into that page rather than navigating to a new
- * URL. Coverage sits right after About, per the requested nav order (see
- * `CoverageSection.tsx`, rendered directly under `AboutSection` in
- * `HomePage.tsx`). This is a fixed, curated set, not the full
- * `mainNavRoutes` derived list used elsewhere in this codebase.
+ * The site is a real multi-page site: every item here is a route, so all of
+ * them are `NavLink`s and the active one is marked with `aria-current="page"`
+ * by react-router. (This used to be a curated list of `#anchor` links into a
+ * one-page layout, which is why the previous version had to special-case the
+ * active state — that problem is gone with the anchors.)
+ *
+ * Order is the READING order in RTL: `nav.home` renders closest to the logo on
+ * the right, stepping left toward the CTA.
  */
 const NAV_ITEMS = [
   { key: 'nav.home', to: paths.home },
-  { key: 'nav.about', to: `${paths.home}#about` },
-  { key: 'nav.coverage', to: `${paths.home}#coverage` },
-  { key: 'nav.services', to: `${paths.home}#how-it-works` },
-  { key: 'nav.merchants', to: `${paths.home}#merchants` },
-  { key: 'nav.drivers', to: `${paths.home}#drivers` },
-  { key: 'nav.faq', to: `${paths.home}#faq` },
+  { key: 'nav.about', to: paths.about },
+  { key: 'nav.services', to: paths.services },
+  { key: 'nav.merchants', to: paths.merchants },
+  { key: 'nav.drivers', to: paths.drivers },
+  { key: 'nav.blog', to: paths.blog },
+  { key: 'nav.pricing', to: paths.pricing },
 ] as const;
 
 export const SiteHeader = () => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  /*
+   * Navigating closes the panel. Without this, tapping a link on mobile
+   * changes the page behind an overlay that stays open — the single most
+   * common mobile-nav bug.
+   */
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
+  /*
+   * Escape closes it and returns focus to the button that opened it. A
+   * keyboard user who opens the panel must have a way out that does not
+   * require tabbing through every link first (the `escape-routes` rule).
+   */
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      setIsMenuOpen(false);
+      toggleRef.current?.focus();
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isMenuOpen]);
+
   return (
     <header className={styles.header} data-component="site-header">
-      <Container as="div" className={styles.inner}>
+      <Container as="div" size="wide" className={styles.inner}>
         <Link to={paths.home} onClick={closeMenu} className={styles.brand} aria-label={site.name}>
           <span>{site.name}</span>
-          <BoltIcon className={styles.brandIcon} />
+          <Logo className={styles.brandIcon} />
         </Link>
 
         <button
+          ref={toggleRef}
           type="button"
           aria-expanded={isMenuOpen}
           aria-controls="primary-navigation"
@@ -59,37 +91,23 @@ export const SiteHeader = () => {
           data-open={isMenuOpen}
           className={styles.nav}
         >
-          <ul className={styles.navList}>
-            {NAV_ITEMS.map((item) =>
-              /*
-               * NavLink's active-state matching only looks at pathname, not
-               * hash — every "#section" item below resolves to the same "/"
-               * pathname as Home, so with NavLink they'd ALL render
-               * `aria-current="page"` at once. Only Home (a real, hash-free
-               * route) gets NavLink; anchor items are plain links until this
-               * page has real scroll-spy.
-               */
-              item.to.includes('#') ? (
-                <li key={item.key}>
-                  <Link to={item.to} onClick={closeMenu} className={styles.navLink}>
-                    {t(item.key)}
-                  </Link>
-                </li>
-              ) : (
-                <li key={item.key}>
-                  <NavLink to={item.to} onClick={closeMenu} className={styles.navLink} end>
-                    {t(item.key)}
-                  </NavLink>
-                </li>
-              )
-            )}
+          <ul role="list" className={styles.navList}>
+            {NAV_ITEMS.map((item) => (
+              <li key={item.key}>
+                <NavLink to={item.to} onClick={closeMenu} className={styles.navLink} end>
+                  {t(item.key)}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
 
-        <Link to={paths.download} onClick={closeMenu} className={styles.cta}>
-          <PersonIcon className={styles.ctaIcon} />
-          {t('nav.submitRequest')}
-        </Link>
+        <div className={styles.actions}>
+          <Link to={paths.apply.driver} onClick={closeMenu} className={styles.cta}>
+            <PersonIcon className={styles.ctaIcon} />
+            {t('nav.submitRequest')}
+          </Link>
+        </div>
       </Container>
     </header>
   );

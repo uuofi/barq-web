@@ -1,77 +1,88 @@
 import type { ComponentType, SVGProps } from 'react';
-import { BoltIcon, ShieldIcon, ApertureIcon, LightbulbIcon, UsersIcon } from '@/components/icons';
+import { BoltIcon, ShieldIcon, EyeIcon, LightbulbIcon, UsersIcon } from '@/components/icons';
 
 /**
- * About page content as DATA — same rationale as `features/home/home.content.ts`.
+ * About page content as data. See `home.content.ts` for the rationale — the
+ * timeline and the values row are rendered by mapping over these arrays, and
+ * every label is an i18n key rather than a literal string.
  */
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
-export interface JourneyMilestone {
+export interface JourneyEntry {
   id: string;
-  /** Gregorian year shown on the card; formatted with `formatNumber` at render time. */
-  year: number;
-  hijriKey: string;
+  yearKey: string;
   titleKey: string;
   descriptionKey: string;
-  /** The single accent card closing the roadmap — no year, gradient surface. */
-  highlighted?: boolean;
 }
 
 /**
- * The roadmap grid is rendered inside a `direction: ltr` wrapper (see
- * `.journeyGrid` in AboutPage.module.css) so the timeline always reads
- * left → right like a chronology, matching the approved design — the same
- * reasoning as the home hero's `.heroInner` override. Order here is
- * therefore chronological, not RTL reading order.
+ * The timeline, in chronological order. Rendered right-to-left in Arabic, so
+ * the earliest entry sits at the start of the reading direction.
  */
-export const JOURNEY_MILESTONES: JourneyMilestone[] = [
-  {
-    id: 'growth',
-    year: 2026,
-    hijriKey: 'about.journey.growth.hijri',
-    titleKey: 'about.journey.growth.title',
-    descriptionKey: 'about.journey.growth.description',
-  },
+export const JOURNEY: JourneyEntry[] = [
   {
     id: 'launch',
-    year: 2026,
-    hijriKey: 'about.journey.launch.hijri',
+    yearKey: 'about.journey.launch.year',
     titleKey: 'about.journey.launch.title',
     descriptionKey: 'about.journey.launch.description',
   },
   {
+    id: 'growth',
+    yearKey: 'about.journey.growth.year',
+    titleKey: 'about.journey.growth.title',
+    descriptionKey: 'about.journey.growth.description',
+  },
+  {
     id: 'expansion',
-    year: 2026,
-    hijriKey: 'about.journey.expansion.hijri',
+    yearKey: 'about.journey.expansion.year',
     titleKey: 'about.journey.expansion.title',
     descriptionKey: 'about.journey.expansion.description',
   },
   {
     id: 'future',
-    year: 2026,
-    hijriKey: 'about.journey.future.hijri',
+    yearKey: 'about.journey.future.year',
     titleKey: 'about.journey.future.title',
     descriptionKey: 'about.journey.future.description',
-    highlighted: true,
   },
 ];
 
-export interface ValueItem {
+export interface ValueEntry {
   id: string;
   icon: IconComponent;
   labelKey: string;
+  bodyKey: string;
 }
 
-/**
- * "Our values" icon row. Order is READING order (first = rightmost in RTL),
- * same convention as `home.content.ts` WHY_FEATURES — visually left → right
- * this renders speed, security, transparency, innovation, teamwork.
- */
-export const VALUES: ValueItem[] = [
-  { id: 'teamwork', icon: UsersIcon, labelKey: 'about.value.teamwork' },
-  { id: 'innovation', icon: LightbulbIcon, labelKey: 'about.value.innovation' },
-  { id: 'transparency', icon: ApertureIcon, labelKey: 'about.value.transparency' },
-  { id: 'security', icon: ShieldIcon, labelKey: 'about.value.security' },
-  { id: 'speed', icon: BoltIcon, labelKey: 'about.value.speed' },
+export const VALUES: ValueEntry[] = [
+  {
+    id: 'speed',
+    icon: BoltIcon,
+    labelKey: 'about.value.speed',
+    bodyKey: 'about.value.speedBody',
+  },
+  {
+    id: 'security',
+    icon: ShieldIcon,
+    labelKey: 'about.value.security',
+    bodyKey: 'about.value.securityBody',
+  },
+  {
+    id: 'transparency',
+    icon: EyeIcon,
+    labelKey: 'about.value.transparency',
+    bodyKey: 'about.value.transparencyBody',
+  },
+  {
+    id: 'innovation',
+    icon: LightbulbIcon,
+    labelKey: 'about.value.innovation',
+    bodyKey: 'about.value.innovationBody',
+  },
+  {
+    id: 'teamwork',
+    icon: UsersIcon,
+    labelKey: 'about.value.teamwork',
+    bodyKey: 'about.value.teamworkBody',
+  },
 ];

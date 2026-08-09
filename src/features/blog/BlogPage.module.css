@@ -1,0 +1,124 @@
+/* --- Featured article ------------------------------------------------------ */
+
+.featured {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: center;
+  padding: var(--space-lg);
+  background-color: var(--web-ink-card);
+  border: 1px solid var(--web-ink-card-border);
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 60rem) {
+  .featured {
+    grid-template-columns: 1fr;
+  }
+}
+
+.featuredBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  /* The copy sits second in the DOM but first visually in the design. Ordering
+     in CSS rather than markup keeps the heading before its own description in
+     the reading order. */
+  padding-inline: var(--space-sm);
+}
+
+.featuredTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-dark);
+}
+
+.featuredExcerpt {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--web-text-on-dark-muted);
+}
+
+/* --- Grid ------------------------------------------------------------------ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-lg);
+  margin-block-start: var(--space-xl);
+}
+
+@media (max-width: 60rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 40rem) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--web-ink-card);
+  border: 1px solid var(--web-ink-card-border);
+  border-radius: var(--radius-lg);
+  block-size: 100%;
+}
+
+.cardTitle {
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-dark);
+  line-height: var(--leading-tight);
+}
+
+.cardExcerpt {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--web-text-on-dark-muted);
+  flex: 1;
+}
+
+/* --- Meta row -------------------------------------------------------------- */
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-xs);
+  color: var(--web-text-on-dark-muted);
+}
+
+.category {
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--web-medallion-bg-dark);
+  color: var(--web-primary-light);
+  font-weight: var(--weight-bold);
+}
+
+.dot {
+  opacity: 0.5;
+}
+
+/* --- Footer ---------------------------------------------------------------- */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-block-start: var(--space-2xl);
+}
+
+.note {
+  margin-block-start: var(--space-md);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--web-text-on-dark-muted);
+}

@@ -1,0 +1,22 @@
+/**
+ * Drivers page — the requirements card sitting beside the income calculator.
+ */
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--space-xl);
+  align-items: stretch;
+}
+
+@media (max-width: 60rem) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Both halves are cards of their own; `stretch` above plus full height here
+   keeps their top and bottom edges aligned regardless of content length. */
+.requirements {
+  block-size: 100%;
+}

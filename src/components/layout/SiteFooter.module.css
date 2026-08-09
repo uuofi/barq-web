@@ -1,0 +1,138 @@
+/**
+ * Footer — the ink canvas that closes every page, directly under each page's
+ * own CTA band. It shares the header's surface colour so the page reads as
+ * being bracketed by the brand rather than trailing off.
+ */
+
+.footer {
+  background-color: var(--web-ink-soft);
+  border-block-start: 1px solid var(--web-ink-border);
+  color: var(--web-text-on-dark-muted);
+  padding-block: var(--space-2xl) var(--space-lg);
+}
+
+.top {
+  display: grid;
+  /* The brand column is wider than the three link columns; `2fr` keeps the
+     tagline on two lines at desktop rather than one very long one. */
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: var(--space-2xl) var(--space-xl);
+}
+
+@media (max-width: 60rem) {
+  .top {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+@media (max-width: 30rem) {
+  .top {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Brand column --------------------------------------------------------- */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-dark);
+}
+
+/* Already a rounded squircle on a transparent ground — see SiteHeader.module.css. */
+.brandIcon {
+  inline-size: 1.4em;
+  block-size: 1.4em;
+  color: var(--web-primary-light);
+}
+
+.tagline {
+  margin-block-start: var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  max-inline-size: 26rem;
+}
+
+/* --- Link columns --------------------------------------------------------- */
+
+.columnTitle {
+  margin-block-end: var(--space-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-dark);
+}
+
+.linkList {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.link {
+  display: inline-block;
+  /* Padding, not margin: it is what makes each row a comfortable target
+     without spreading the list out visually. */
+  padding-block: 0.3rem;
+  font-size: var(--text-sm);
+  color: var(--web-text-on-dark-muted);
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--web-primary-light);
+}
+
+/* --- Contact + social ----------------------------------------------------- */
+
+.contact {
+  display: grid;
+  gap: 0.4rem;
+  font-style: normal;
+}
+
+.social {
+  display: flex;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-md);
+}
+
+.socialLink {
+  display: grid;
+  place-items: center;
+  /* 44×44 target even though the visual disc is smaller. */
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: 50%;
+  background-color: var(--web-medallion-bg-dark);
+  color: var(--web-primary-light);
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
+}
+
+.socialLink:hover {
+  background-color: var(--web-primary);
+  color: #fff;
+}
+
+.socialLink svg {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+}
+
+/* --- Bottom bar ----------------------------------------------------------- */
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-block-start: var(--space-2xl);
+  padding-block-start: var(--space-lg);
+  border-block-start: 1px solid var(--web-ink-border);
+  font-size: var(--text-xs);
+}

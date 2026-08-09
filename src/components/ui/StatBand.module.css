@@ -1,0 +1,94 @@
+/**
+ * The four-up figure row: +12,000 / +450 / +220 / 98%.
+ *
+ * Appears as a violet gradient band on Home and as three plain figures on the
+ * Cities page.
+ */
+
+.band {
+  display: grid;
+  grid-template-columns: repeat(var(--stat-columns, 4), minmax(0, 1fr));
+  gap: var(--space-md);
+  padding: var(--space-xl) var(--space-lg);
+  background-image: var(--web-gradient-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--web-shadow-cta);
+}
+
+.plain {
+  background-image: none;
+  background-color: transparent;
+  box-shadow: none;
+  padding-inline: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  text-align: center;
+  min-inline-size: 0;
+}
+
+/* Dividers between figures. Drawn as a border on the inline-start edge of
+   every item but the first, so the rule flips with the writing direction for
+   free instead of needing a `:last-child` mirror in RTL. */
+.item + .item {
+  border-inline-start: 1px solid rgb(255 255 255 / 0.22);
+}
+
+.plain .item + .item {
+  border-inline-start-color: var(--web-card-border);
+}
+
+.value {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  line-height: 1.1;
+  color: #fff;
+  /* Tabular figures: without them the four values jitter horizontally as a
+     counter animates or the locale changes. */
+  font-variant-numeric: tabular-nums;
+  /* Latin digits stay LTR inside an RTL paragraph. `+12,000` must not render
+     as `12,000+`. */
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.plain .value {
+  color: var(--web-primary);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: rgb(255 255 255 / 0.85);
+}
+
+.plain .label {
+  color: var(--web-text-on-light-muted);
+}
+
+@media (max-width: 48rem) {
+  .band {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg) var(--space-md);
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  /* With two per row the sibling rule would draw a divider at the start of
+     the third item — the first of a new row. Reset, then redraw only for the
+     even-positioned ones. */
+  .item + .item {
+    border-inline-start: none;
+  }
+
+  .item:nth-child(even) {
+    border-inline-start: 1px solid rgb(255 255 255 / 0.22);
+  }
+
+  .plain .item:nth-child(even) {
+    border-inline-start-color: var(--web-card-border);
+  }
+}

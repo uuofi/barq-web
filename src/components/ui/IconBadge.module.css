@@ -1,0 +1,75 @@
+/**
+ * The violet medallion: a tinted disc/squircle with a stroke icon centred in
+ * it. It appears roughly forty times across the site (feature grids, step
+ * flows, value rows, contact details), so it is a component rather than a
+ * repeated pair of rules — that is the only way the tint, the icon size and
+ * the disc size stay identical everywhere.
+ */
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  background-color: var(--web-medallion-bg);
+  color: var(--web-primary);
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.badge > svg {
+  inline-size: 50%;
+  block-size: 50%;
+}
+
+/* --- Shapes ------------------------------------------------------------- */
+
+.circle {
+  border-radius: 50%;
+}
+
+.squircle {
+  border-radius: var(--web-radius-icon);
+}
+
+/* --- Sizes -------------------------------------------------------------- */
+
+.sm {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+}
+
+.md {
+  inline-size: 3.25rem;
+  block-size: 3.25rem;
+}
+
+.lg {
+  inline-size: 4rem;
+  block-size: 4rem;
+}
+
+.xl {
+  inline-size: clamp(4.5rem, 4rem + 2vw, 5.5rem);
+  block-size: clamp(4.5rem, 4rem + 2vw, 5.5rem);
+}
+
+/* --- Tones -------------------------------------------------------------- */
+
+/* On the ink canvas the 10%-alpha violet disc disappears; it needs the
+   lighter violet at a higher alpha and the light-violet icon colour. */
+.onDark {
+  background-color: var(--web-medallion-bg-dark);
+  color: var(--web-primary-light);
+}
+
+/* Fully filled — used for the active/highlighted step in a flow. */
+.solid {
+  background-image: var(--web-gradient-primary);
+  color: #fff;
+}
+
+.success {
+  background-color: rgb(16 185 129 / 0.14);
+  color: var(--web-success);
+}

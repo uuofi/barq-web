@@ -1,0 +1,74 @@
+/**
+ * The green/violet tick list used by the Merchants "مميزات المنصة للتجار"
+ * card, the Drivers "مميزات العمل مع البرق" card, the Drivers requirements
+ * card and every pricing tier.
+ */
+
+.card {
+  padding: var(--space-xl);
+  background-color: var(--web-surface);
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--web-card-shadow);
+}
+
+.title {
+  margin-block-end: var(--space-lg);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--web-text-on-light);
+}
+
+.tick {
+  flex-shrink: 0;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  /* Nudged down to sit on the text's optical centre rather than its box top,
+     which Arabic ascenders otherwise make look high. */
+  margin-block-start: 0.15rem;
+  color: var(--web-success);
+}
+
+.violet .tick {
+  color: var(--web-primary);
+}
+
+/* Two-column list — the merchant feature card at desktop width. */
+.columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md) var(--space-lg);
+}
+
+@media (max-width: 48rem) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: var(--space-lg);
+  }
+}
+
+/* Muted variant for a "not included" row in a pricing tier. */
+.muted {
+  color: var(--web-text-on-light-muted);
+}
+
+.muted .tick {
+  color: var(--web-text-on-light-muted);
+  opacity: 0.5;
+}

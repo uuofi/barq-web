@@ -11,7 +11,8 @@
     "readMore": "Read more",
     "backHome": "Back to home",
     "skipToContent": "Skip to content",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "imagePending": "Image pending"
   },
 
   "nav": {
@@ -19,13 +20,16 @@
     "merchants": "For merchants",
     "drivers": "For drivers",
     "about": "About Al-Barq",
-    "coverage": "Coverage areas",
+    "coverage": "Cities we serve",
     "services": "Services",
+    "howItWorks": "How it works",
+    "blog": "Blog",
+    "pricing": "Pricing",
     "faq": "FAQ",
-    "contact": "Contact",
+    "contact": "Contact us",
     "download": "Get the app",
-    "trackOrder": "Track order",
-    "submitRequest": "Submit a request",
+    "trackOrder": "Track shipment",
+    "submitRequest": "Apply now",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "language": "Language"
@@ -35,7 +39,14 @@
     "rights": "All rights reserved",
     "terms": "Terms & Conditions",
     "privacy": "Privacy Policy",
-    "coverage": "Coverage areas"
+    "coverage": "Cities we serve",
+    "tagline": "Iraq's fastest delivery platform — connecting merchants, drivers, and customers in one place.",
+    "sections": {
+      "platform": "Platform",
+      "company": "Company",
+      "support": "Support"
+    },
+    "followUs": "Follow us"
   },
 
   "errors": {
@@ -68,27 +79,71 @@
   },
 
   "home": {
-    "heroTagline": "Fast delivery, we care about your experience",
-    "ctaDriver": "Sign up as a driver",
+    "heroTagline": "We deliver fast — we care about your business",
+    "heroLead": "A complete delivery platform that matches your store with the nearest available driver in seconds, and lets you follow every shipment in real time until it reaches your customer's door.",
+    "heroBadge": "Fastest in Iraq",
+    "heroImageAlt": "An Al-Barq delivery rider on a motorbike at night in the city",
+    "ctaDriver": "Join as a driver",
     "ctaMerchant": "Sign up as a merchant",
 
     "whyTitle": "Why Al-Barq?",
+    "whySubtitle": "Four reasons thousands of merchants and drivers choose Al-Barq every day",
     "feature": {
-      "fastDelivery": "Fast delivery",
-      "trustedSafety": "Trusted safety",
+      "fastDelivery": "Instant delivery",
+      "fastDeliveryBody": "We reach your customer within minutes of the order being ready, by the shortest route available.",
+      "trustedSafety": "Guaranteed safety",
+      "trustedSafetyBody": "Every order is documented and insured from pickup through to final handover.",
       "liveTracking": "Live tracking",
+      "liveTrackingBody": "Follow the driver's location on the map in real time — you and your customer.",
       "dailyOrders": "High daily volume",
-      "support": "24-hour support"
+      "dailyOrdersBody": "A wide driver network that absorbs your peak hours without delay.",
+      "support": "24-hour support",
+      "supportBody": "An Iraqi support team ready to answer you at any hour of the day."
     },
 
     "stat": {
-      "orders": "orders completed",
-      "drivers": "drivers",
-      "merchants": "merchants",
+      "orders": "registered customers",
+      "drivers": "active drivers",
+      "merchants": "partner merchants",
       "satisfaction": "customer satisfaction"
     },
 
     "howTitle": "How Al-Barq works",
+    "howSubtitle": "From sign-up to handover — six simple steps, no more",
+    "howCta": "More about how it works",
+    "step": {
+      "register": "Sign up",
+      "registerBody": "Create your merchant or driver account in minutes.",
+      "createOrder": "Create the order",
+      "createOrderBody": "Enter the order details and your customer's address.",
+      "match": "Driver matching",
+      "matchBody": "The system picks the nearest available driver automatically.",
+      "pickup": "Pickup",
+      "pickupBody": "The driver collects the order from your store.",
+      "deliver": "Delivery",
+      "deliverBody": "Track the shipment on the map to your customer's door.",
+      "confirm": "Handover & rating",
+      "confirmBody": "Confirm delivery and rate the service."
+    },
+
+    "appsTitle": "The Al-Barq apps",
+    "appsSubtitle": "Two interfaces, one for each role on the platform",
+    "app": {
+      "driver": "Driver app",
+      "driverBody": "Accept nearby orders and follow your daily earnings in real time.",
+      "merchant": "Merchant app",
+      "merchantBody": "Create orders and track their status from your phone, wherever you are.",
+      "dashboard": "Dashboard",
+      "dashboardBody": "Detailed reports and performance metrics to run your operation from the browser."
+    },
+
+    "partnersTitle": "Our partners",
+
+    "cta": {
+      "title": "Ready to join Al-Barq?",
+      "subtitle": "Sign up today and start your first order in under 24 hours."
+    },
+
     "forDriver": "For drivers",
     "forMerchant": "For merchants",
     "driverStep": {
@@ -105,32 +160,317 @@
     }
   },
 
+  "services": {
+    "hero": {
+      "title": "Our services",
+      "subtitle": "Complete delivery solutions for every need"
+    },
+    "item": {
+      "instant": "Instant delivery",
+      "instantBody": "Delivery within the hour inside the city, for restaurants and stores that cannot wait.",
+      "scheduled": "Scheduled delivery",
+      "scheduledBody": "Set pickup and drop-off times in advance and organise your shipments across the week.",
+      "fleet": "Fleet management",
+      "fleetBody": "A dedicated driver fleet for your store, with full performance reporting and daily oversight.",
+      "tracking": "Live tracking",
+      "trackingBody": "A live map showing every shipment, with automatic notifications for you and your customer.",
+      "api": "API integration",
+      "apiBody": "Connect your online store to Al-Barq directly and create orders programmatically — no manual entry.",
+      "support": "24/7 support",
+      "supportBody": "A support team available every day of the week to resolve any issue within minutes."
+    },
+    "cta": {
+      "title": "Have a special requirement? Talk to us",
+      "subtitle": "We'll design a solution around the size of your operation and the kind of goods you ship.",
+      "button": "Contact us"
+    }
+  },
+
+  "howItWorks": {
+    "hero": {
+      "title": "How Al-Barq works",
+      "subtitle": "A smart system that connects everyone"
+    },
+    "chainTitle": "The full order cycle",
+    "chainSubtitle": "Four parties joined by one system, from order to handover",
+    "actor": {
+      "merchant": "Merchant",
+      "merchantBody": "Creates the order and sets the customer's address and the amount to collect.",
+      "system": "The system",
+      "systemBody": "Matches the order to the nearest available driver in the same governorate.",
+      "driver": "Driver",
+      "driverBody": "Collects the order from the store and takes the shortest route.",
+      "customer": "Customer",
+      "customerBody": "Receives the order, confirms handover, and rates the service."
+    },
+    "benefitsTitle": "What makes the system different?",
+    "benefit": {
+      "speed": "Speed of delivery",
+      "speedBody": "Automatic matching in seconds, instead of calling drivers one by one.",
+      "price": "Competitive pricing",
+      "priceBody": "Clear pricing with no hidden fees, and plans that fit every size of business.",
+      "safety": "Safety and reliability",
+      "safetyBody": "Drivers verified by ID and valid licence, with a full record of every order.",
+      "support": "Round-the-clock support",
+      "supportBody": "A direct support channel for merchants and drivers at any hour."
+    },
+    "cta": {
+      "title": "Start using Al-Barq today",
+      "primary": "Use Al-Barq",
+      "secondary": "Learn more"
+    }
+  },
+
+  "pricing": {
+    "hero": {
+      "title": "Pricing",
+      "subtitle": "Plans to suit every need"
+    },
+    "perMonth": "IQD / month",
+    "popular": "Most popular",
+    "plan": {
+      "starter": {
+        "name": "Starter",
+        "tagline": "For new stores sending their first shipments",
+        "price": "25,000",
+        "feature1": "Up to 100 orders per month",
+        "feature2": "Live shipment tracking",
+        "feature3": "Basic dashboard",
+        "feature4": "Email support",
+        "cta": "Choose plan"
+      },
+      "business": {
+        "name": "Business",
+        "tagline": "For mid-sized stores with steady daily volume",
+        "price": "75,000",
+        "feature1": "Up to 500 orders per month",
+        "feature2": "Priority in driver matching",
+        "feature3": "Advanced reports and performance metrics",
+        "feature4": "API integration with your store",
+        "feature5": "Phone support within the hour",
+        "cta": "Choose plan"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "tagline": "For companies and multi-branch chains",
+        "price": "Custom agreement",
+        "feature1": "Unlimited orders",
+        "feature2": "Dedicated driver fleet",
+        "feature3": "Dedicated account manager",
+        "feature4": "Service level agreement (SLA)",
+        "feature5": "Full integration with your systems",
+        "cta": "Contact us"
+      }
+    },
+    "footnote": "Every plan includes technical support and ongoing updates, and you can upgrade or downgrade at any time."
+  },
+
+  "blog": {
+    "hero": {
+      "title": "Blog",
+      "subtitle": "The latest news and tips"
+    },
+    "featured": "Featured",
+    "readMore": "Read article",
+    "loadMore": "Show more",
+    "readingTime": "{{count}} min read",
+    "post": {
+      "tips": {
+        "title": "5 tips to increase your earnings as a delivery driver",
+        "excerpt": "From choosing peak hours to planning your daily route — five simple habits that make a real difference to your monthly income.",
+        "category": "For drivers",
+        "date": "12 March 2026"
+      },
+      "packaging": {
+        "title": "How to prepare your orders for delivery properly",
+        "excerpt": "Good packaging reduces damage and improves your customer ratings.",
+        "category": "For merchants",
+        "date": "5 March 2026"
+      },
+      "tech": {
+        "title": "New technology in the delivery sector",
+        "excerpt": "How smart matching and live maps are reshaping the market.",
+        "category": "Technology",
+        "date": "27 February 2026"
+      },
+      "expansion": {
+        "title": "Al-Barq expands into new governorates",
+        "excerpt": "Wider coverage reaching more Iraqi cities this year.",
+        "category": "News",
+        "date": "18 February 2026"
+      }
+    }
+  },
+
+  "contact": {
+    "hero": {
+      "title": "Contact us",
+      "subtitle": "We're here to help"
+    },
+    "info": {
+      "title": "Get in touch",
+      "phoneLabel": "Phone",
+      "emailLabel": "Email",
+      "addressLabel": "Address",
+      "address": "Baghdad — Iraq",
+      "hoursLabel": "Opening hours",
+      "hours": "Daily from 9am to 9pm"
+    },
+    "form": {
+      "title": "Send us a message",
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "phone": "Phone number",
+      "phonePlaceholder": "07xxxxxxxxx",
+      "subject": "Subject",
+      "subjectPlaceholder": "What's your message about?",
+      "message": "Your message",
+      "messagePlaceholder": "Write your message here...",
+      "submit": "Send message",
+      "success": "Thanks for getting in touch — we'll reply within one working day.",
+      "optional": "optional"
+    },
+    "mapTitle": "Find us on the map",
+    "mapAlt": "Map showing the Al-Barq office location in Baghdad"
+  },
+
+  "apply": {
+    "stepOf": "Step {{current}} of {{total}}",
+    "next": "Next",
+    "previous": "Back",
+    "submit": "Submit application",
+    "reviewTitle": "Review your application",
+    "reviewLead": "Check your details before submitting. You can go back to edit any step.",
+    "requiredHint": "Fields marked * are required",
+
+    "driver": {
+      "title": "Apply as a driver",
+      "subtitle": "Fill in the details below and we'll contact you within 48 hours",
+      "step1": {
+        "title": "Personal details",
+        "fullName": "Full name",
+        "fullNamePlaceholder": "Your full name as it appears on your ID",
+        "phone": "Phone number",
+        "phonePlaceholder": "07xxxxxxxxx",
+        "city": "City",
+        "cityPlaceholder": "Choose your city",
+        "birthDate": "Date of birth"
+      },
+      "step2": {
+        "title": "Vehicle details",
+        "vehicleType": "Vehicle type",
+        "vehicleMotorcycle": "Motorbike",
+        "vehicleCar": "Car",
+        "vehicleBicycle": "Bicycle",
+        "vehicleModel": "Vehicle model",
+        "vehicleModelPlaceholder": "e.g. Honda 2020",
+        "plateNumber": "Number plate",
+        "plateNumberPlaceholder": "e.g. A 12345"
+      },
+      "step3": {
+        "title": "Upload documents",
+        "hint": "Accepted formats: JPG, PNG or PDF, up to 5MB per file.",
+        "nationalId": "National ID",
+        "license": "Driving licence",
+        "vehicleReg": "Vehicle registration",
+        "upload": "Tap to upload",
+        "uploaded": "Uploaded",
+        "remove": "Remove file"
+      },
+      "step4": {
+        "title": "Experience & availability",
+        "experience": "Years of delivery experience",
+        "experienceNone": "No previous experience",
+        "experienceOne": "Less than a year",
+        "experienceThree": "1 to 3 years",
+        "experienceMore": "More than 3 years",
+        "availability": "Preferred working hours",
+        "availabilityMorning": "Mornings",
+        "availabilityEvening": "Evenings",
+        "availabilityFull": "Full time",
+        "notes": "Anything else",
+        "notesPlaceholder": "Anything you'd like us to know"
+      },
+      "step5": {
+        "title": "Review your application"
+      }
+    },
+
+    "merchant": {
+      "title": "Apply as a merchant",
+      "subtitle": "Register your business and start receiving deliveries within days",
+      "step1": {
+        "title": "Business details",
+        "businessName": "Business name",
+        "businessNamePlaceholder": "Your store name as customers know it",
+        "ownerName": "Owner's name",
+        "ownerNamePlaceholder": "Full name",
+        "phone": "Phone number",
+        "phonePlaceholder": "07xxxxxxxxx",
+        "email": "Email",
+        "emailPlaceholder": "name@example.com",
+        "city": "City",
+        "address": "Store address",
+        "addressPlaceholder": "Area, street, nearest landmark"
+      },
+      "step2": {
+        "title": "Business type",
+        "hint": "Pick the closest match — it helps us assign the right kind of driver.",
+        "restaurant": "Restaurant",
+        "pharmacy": "Pharmacy",
+        "store": "Shop",
+        "supermarket": "Supermarket",
+        "other": "Something else",
+        "ordersPerDay": "Average orders per day",
+        "ordersPerDayPlaceholder": "e.g. 25"
+      },
+      "step3": {
+        "title": "Review your application"
+      }
+    },
+
+    "success": {
+      "title": "Your application has been received",
+      "body": "We'll review your application and contact you within 48 hours on the number you provided.",
+      "referenceLabel": "Reference number",
+      "home": "Back to home",
+      "nextTitle": "What happens next?",
+      "next1": "Our team reviews your details and documents.",
+      "next2": "We call you to confirm the information and agree an activation date.",
+      "next3": "We activate your account and send you your app login details."
+    }
+  },
+
   "about": {
     "hero": {
       "title": "About Al-Barq",
-      "description": "Al-Barq is a digital delivery platform connecting merchants, drivers, and customers in one place. We built it to be the fastest and most trusted way to deliver across Iraq, and every day we keep improving an experience built on speed, safety, and transparency for everyone involved. Every order deserves to arrive on time, and every partner deserves tools that make their work easier and more profitable."
+      "description": "Al-Barq is a digital delivery platform connecting merchants, drivers, and customers in one place. We built it to be the fastest and most trusted way to deliver across Iraq, and every day we keep improving an experience built on speed, safety, and transparency for everyone involved. Every order deserves to arrive on time, and every partner deserves tools that make their work easier and more profitable.",
+      "imageAlt": "City lights at night with fast-moving light trails, evoking delivery speed"
     },
 
     "journeyTitle": "Our journey",
+    "journeySubtitle": "From an idea to a platform serving thousands of orders a day",
     "journey": {
+      "launch": {
+        "year": "2024",
+        "title": "The beginning",
+        "description": "We started with a simple idea: that every merchant should find a trusted driver in seconds, instead of dozens of phone calls."
+      },
       "growth": {
-        "hijri": "1447 AH",
-        "title": "Operational growth",
+        "year": "2025",
+        "title": "Expansion",
         "description": "We grew daily order volume and expanded our network of drivers and merchant partners across several governorates."
       },
-      "launch": {
-        "hijri": "1447 AH",
-        "title": "Platform launch",
-        "description": "We officially launched Al-Barq with a driver app, a merchant app, and a full admin dashboard."
-      },
       "expansion": {
-        "hijri": "1447 AH",
-        "title": "Expansion & rollout",
-        "description": "We expanded coverage to new governorates and launched real-time order tracking."
+        "year": "2026",
+        "title": "Maturity",
+        "description": "We launched real-time order tracking, and APIs that connect customers' own stores straight into the platform."
       },
       "future": {
-        "hijri": "And beyond",
-        "title": "The future",
+        "year": "Next",
+        "title": "What's ahead",
         "description": "Our goal is to cover every governorate in Iraq and keep expanding with smart solutions for our partners and customers."
       }
     },
@@ -145,18 +485,24 @@
     },
 
     "valuesTitle": "Our values",
+    "valuesSubtitle": "Five principles behind every decision we make",
     "value": {
       "speed": "Speed",
+      "speedBody": "Time is the product. Every second we save is a customer who is happier.",
       "security": "Security",
+      "securityBody": "Verified drivers and a full record of every order, from pickup to handover.",
       "transparency": "Transparency",
+      "transparencyBody": "Clear pricing and open reporting, with no hidden fees.",
       "innovation": "Innovation",
-      "teamwork": "Teamwork"
+      "innovationBody": "We keep developing the platform around what our partners actually ask for.",
+      "teamwork": "Teamwork",
+      "teamworkBody": "The merchant's, the driver's, and the customer's success is one and the same."
     },
 
     "cta": {
       "title": "Join us now and be part of our success",
-      "driverButton": "Sign up as a driver",
-      "merchantButton": "Apply as a merchant"
+      "driverButton": "Join as a driver",
+      "merchantButton": "Sign up as a merchant"
     }
   },
 
@@ -165,42 +511,116 @@
       "title": "The cities we serve",
       "description": "We cover wide areas across Iraq to be closer to you"
     },
-    "imageAlt": "Map of Iraq showing Diwaniyah and Najaf governorates as active areas within the Al-Barq delivery service",
+    "imageAlt": "Map of Iraq showing the governorates active within the Al-Barq delivery service",
+    "mapTitle": "Coverage map",
     "listTitle": "Governorates available now",
     "available": "Available now",
+    "comingSoon": "Coming soon",
+    "city": {
+      "baghdad": "Baghdad",
+      "basra": "Basra",
+      "mosul": "Mosul",
+      "erbil": "Erbil",
+      "najaf": "Najaf",
+      "karbala": "Karbala",
+      "kirkuk": "Kirkuk",
+      "diwaniyah": "Diwaniyah"
+    },
+    "stat": {
+      "cities": "major cities",
+      "areas": "areas covered",
+      "orders": "orders a day"
+    },
     "expansion": {
       "title": "More areas coming soon",
       "description": "We're steadily expanding coverage to more governorates across Iraq — follow us to be the first to know when a new area goes live."
     },
     "cta": {
       "title": "Is your city within our coverage? Join us now",
-      "driverButton": "Sign up as a driver",
-      "merchantButton": "Apply as a merchant"
+      "driverButton": "Join as a driver",
+      "merchantButton": "Sign up as a merchant"
     }
   },
 
   "merchants": {
-    "title": "For merchants",
-    "intro": "Grow your store with Al-Barq — receive delivery orders, track your sales, and reach more customers every day from one easy dashboard.",
-    "benefit": {
-      "fastDelivery": "Fast delivery",
-      "support": "Ongoing support",
-      "dashboard": "Easy dashboard",
-      "earnings": "Track earnings"
+    "hero": {
+      "title": "For merchants",
+      "subtitle": "Grow your sales with Al-Barq",
+      "lead": "Grow your store with Al-Barq — receive delivery orders, track your sales, and reach more customers every day from one easy dashboard."
     },
-    "cta": "Apply as a merchant"
+    "featuresTitle": "What the platform gives merchants",
+    "feature": {
+      "instantOrder": "Create an order in seconds",
+      "autoMatch": "Automatic matching to the nearest available driver",
+      "liveTracking": "Live tracking of every shipment on the map",
+      "reports": "Daily reports and performance metrics",
+      "payments": "Easy order and payment management",
+      "ratings": "Rate drivers and block the ones who don't suit you",
+      "support": "Round-the-clock technical support"
+    },
+    "dashboardAlt": "The Al-Barq merchant dashboard showing order and sales statistics",
+    "flowTitle": "How an order works",
+    "flowSubtitle": "Five steps from creating the order to confirming handover",
+    "flow": {
+      "create": "Create the order",
+      "match": "Driver matching",
+      "pickup": "Driver collects",
+      "transit": "On the way",
+      "delivered": "Handover confirmed"
+    },
+    "cta": {
+      "title": "Sign up now and grow your business",
+      "subtitle": "Join more than 220 merchants who rely on Al-Barq every day.",
+      "button": "Sign up as a merchant"
+    }
   },
 
   "drivers": {
-    "title": "For drivers",
-    "intro": "Work flexibly and earn daily with Al-Barq — accept nearby orders, deliver them, and collect your earnings easily through the app.",
-    "benefit": {
-      "nearbyOrders": "Nearby orders",
-      "support": "Ongoing support",
-      "flexibleHours": "Flexible hours",
-      "dailyEarnings": "Daily earnings"
+    "hero": {
+      "title": "For drivers",
+      "subtitle": "Earn a steady income with Al-Barq",
+      "lead": "Work flexibly and earn daily — accept nearby orders, deliver them, and collect your earnings easily through the app.",
+      "imageAlt": "An Al-Barq delivery rider on a motorbike in the street"
     },
-    "cta": "Sign up as a driver"
+    "featuresTitle": "What you get riding with Al-Barq",
+    "feature": {
+      "manyOrders": "Plenty of orders every day",
+      "dailyEarnings": "Daily earnings, paid regularly",
+      "flexibleHours": "Flexible hours you choose yourself",
+      "support": "Dedicated support for drivers",
+      "insurance": "Insurance cover while you work",
+      "bonus": "Weekly performance bonuses"
+    },
+    "flowTitle": "How it works",
+    "flowSubtitle": "Four steps between you and your first order",
+    "flow": {
+      "register": "Sign up as a driver",
+      "download": "Download the app",
+      "receive": "Accept orders",
+      "earn": "Collect your earnings"
+    },
+    "requirementsTitle": "What you'll need",
+    "requirement": {
+      "id": "A valid national ID",
+      "license": "A valid driving licence",
+      "vehicle": "A vehicle (motorbike or car)",
+      "phone": "A smartphone with internet"
+    },
+    "calculator": {
+      "title": "Estimate your income",
+      "subtitle": "See what you could earn based on your daily activity",
+      "ordersLabel": "Orders per day",
+      "rateLabel": "Average earnings per order (IQD)",
+      "dailyLabel": "Estimated daily income",
+      "monthlyLabel": "Estimated monthly income (26 working days)",
+      "currency": "IQD",
+      "disclaimer": "These are indicative estimates only. Actual income varies by city, hours worked, and the number of orders available."
+    },
+    "cta": {
+      "title": "Apply now and join thousands of drivers",
+      "subtitle": "Signing up is completely free and takes under five minutes.",
+      "button": "Apply now"
+    }
   },
 
   "faq": {
@@ -468,6 +888,27 @@
     },
     "deleteAccount": {
       "description": "Delete your Al-Barq account here — see exactly what data is removed, what is kept, and when it is erased permanently."
+    },
+    "services": {
+      "description": "Al-Barq delivery services — instant and scheduled delivery, fleet management, live tracking, and APIs for online stores."
+    },
+    "howItWorks": {
+      "description": "How Al-Barq works — a smart system connecting merchant, driver, and customer, from creating an order to confirming handover."
+    },
+    "pricing": {
+      "description": "Al-Barq delivery plans and pricing — Starter, Business, and Enterprise plans for every size of business in Iraq."
+    },
+    "blog": {
+      "description": "The Al-Barq blog — tips for drivers and merchants, and the latest news from Iraq's delivery sector."
+    },
+    "contact": {
+      "description": "Get in touch with the Al-Barq team — phone, email, and a direct message form for your enquiries."
+    },
+    "applyDriver": {
+      "description": "Apply to work as a delivery driver with Al-Barq — submit your details and documents and we'll contact you within 48 hours."
+    },
+    "applyMerchant": {
+      "description": "Register your business with Al-Barq — receive delivery orders and track your sales from a single dashboard."
     }
   }
 }

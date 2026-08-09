@@ -1,0 +1,200 @@
+/**
+ * The banner at the top of every page.
+ *
+ * Three variants share this file because they differ only in whether a
+ * photograph sits behind the copy:
+ *   - Home and Drivers: a photograph, bled to the full width.
+ *   - About: a photograph, shorter.
+ *   - Services / Pricing / Blog / Contact / Cities: no photograph, just the
+ *     ink canvas and its violet wash.
+ */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--web-ink);
+  color: var(--web-text-on-dark);
+  padding-block: clamp(3rem, 2rem + 6vw, 6.5rem);
+}
+
+.withImage {
+  padding-block: clamp(4rem, 2.5rem + 9vw, 9rem);
+}
+
+/* --- Background media --------------------------------------------------- */
+
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.media img {
+  inline-size: 100%;
+  block-size: 100%;
+  /* `cover` + a start-biased focal point: the rider and the scooter sit on
+     one side of both photographs, and centre-cropping decapitates them at
+     narrow widths. */
+  object-fit: cover;
+  object-position: var(--hero-focus, 50% 50%);
+}
+
+/* Scrim. The copy sits over a photograph, so contrast cannot be assumed —
+   this guarantees the 4.5:1 floor for the subtitle regardless of what part of
+   the image ends up behind it after cropping.
+
+   The dense end is on the PHYSICAL left and does not mirror with the writing
+   direction, because what it is shading is the photograph: in both hero
+   images the rider and the delivery box sit on the right of the frame, so the
+   clear half is the left half in Arabic and in English alike. See `.copyLeft`
+   below, which puts the text in that same clear half for the same reason. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      to left,
+      rgb(6 6 15 / 0.3) 0%,
+      rgb(6 6 15 / 0.72) 42%,
+      rgb(6 6 15 / 0.93) 100%
+    ),
+    linear-gradient(to top, rgb(6 6 15 / 0.85), transparent 55%);
+}
+
+/* Below tablet the copy spans the full width, so there is no longer a "clear
+   half" for the gradient to leave alone — it has to darken the whole frame or
+   the last line of the lead sits over the light trails at ~2:1. */
+@media (max-width: 48rem) {
+  .scrim {
+    background:
+      linear-gradient(
+        to left,
+        rgb(6 6 15 / 0.7) 0%,
+        rgb(6 6 15 / 0.82) 50%,
+        rgb(6 6 15 / 0.9) 100%
+      ),
+      linear-gradient(to top, rgb(6 6 15 / 0.85), transparent 60%);
+  }
+
+  .copyLeft {
+    margin-right: 0;
+  }
+}
+
+/* No photograph: the violet radial wash instead. */
+.wash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(52rem 24rem at 72% 10%, rgb(124 58 237 / 0.28), transparent 60%),
+    radial-gradient(40rem 20rem at 15% 95%, rgb(109 40 217 / 0.2), transparent 62%);
+}
+
+/* --- Copy --------------------------------------------------------------- */
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-inline-size: 38rem;
+}
+
+/*
+ * Copy pinned to the PHYSICAL left, using physical margins rather than the
+ * logical ones this stylesheet otherwise uses throughout. Deliberate, and the
+ * only place it happens.
+ *
+ * The constraint is the photograph, not the language: the rider and the
+ * delivery box occupy the right of both hero images. With a logical margin
+ * the block would sit at the inline start — which in Arabic is the right,
+ * directly on top of the rider and unreadable over the box. The subject of a
+ * photograph does not move when the locale changes, so neither does the copy.
+ *
+ * The text INSIDE the block still follows the writing direction; only the
+ * block's position is fixed.
+ */
+.copyLeft {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.centered {
+  max-inline-size: 46rem;
+  margin-inline: auto;
+  text-align: center;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  align-self: flex-start;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-pill);
+  background-color: rgb(124 58 237 / 0.22);
+  border: 1px solid rgb(167 139 250 / 0.3);
+  color: var(--web-primary-light);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+}
+
+.centered .eyebrow {
+  align-self: center;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  letter-spacing: -0.02em;
+}
+
+.centered .title {
+  justify-content: center;
+}
+
+.titleIcon {
+  inline-size: 0.85em;
+  block-size: 0.85em;
+  flex-shrink: 0;
+  color: var(--web-primary-light);
+}
+
+.subtitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--web-text-on-dark-muted);
+  line-height: var(--leading-normal);
+}
+
+.lead {
+  font-size: var(--text-md);
+  color: var(--web-text-on-dark-muted);
+  line-height: var(--leading-normal);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block-start: var(--space-sm);
+}
+
+.centered .actions {
+  justify-content: center;
+}
+
+@media (max-width: 30rem) {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -26,6 +26,13 @@ export const contactFormSchema = z.object({
     .optional()
     .or(z.literal('').transform(() => undefined)),
 
+  /**
+   * Optional: the approved design shows a subject line, but a visitor who
+   * leaves it blank has still told us everything we need in `message`, and
+   * making it required would reject a valid enquiry over a formality.
+   */
+  subject: z.string().trim().max(120, 'forms.tooLong').optional(),
+
   message: z.string().trim().min(10, 'forms.tooShort').max(1000, 'forms.tooLong'),
 
   /**

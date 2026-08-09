@@ -1,0 +1,147 @@
+/**
+ * "احسب دخلك" — the driver income estimator.
+ */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  background-color: var(--web-surface);
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--web-card-shadow);
+  block-size: 100%;
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.subtitle {
+  margin-block-start: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--web-text-on-light-muted);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+@media (max-width: 30rem) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: var(--space-lg);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--web-text-on-light);
+}
+
+.input {
+  /* 44px minimum: this is a touch target as much as it is a field. */
+  min-block-size: 2.75rem;
+  padding: 0.6rem var(--space-md);
+  background-color: var(--web-surface-alt);
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-md);
+  color: var(--web-text-on-light);
+  /* 16px floor stops iOS Safari zooming the page on focus. */
+  font-size: 1rem;
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  /* Centred rather than start-aligned: the control is pinned to `dir="ltr"`
+     for its digit shaping (see IncomeCalculator.tsx), which would otherwise
+     park the number on the left of a right-aligned Arabic card. */
+  text-align: center;
+  inline-size: 100%;
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--web-primary);
+  background-color: var(--web-surface);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--web-primary);
+  outline-offset: 1px;
+}
+
+/* --- Result --------------------------------------------------------------- */
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+@media (max-width: 30rem) {
+  .results {
+    grid-template-columns: 1fr;
+  }
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background-color: var(--web-primary-soft);
+  text-align: center;
+}
+
+.resultHighlight {
+  background-image: var(--web-gradient-primary);
+}
+
+.resultLabel {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--web-primary-strong);
+}
+
+.resultHighlight .resultLabel {
+  color: rgb(255 255 255 / 0.88);
+}
+
+.resultValue {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-black);
+  color: var(--web-primary-strong);
+  font-variant-numeric: tabular-nums;
+  /* The amount reads "15,000 د.ع": the digits stay LTR, the currency word
+     stays Arabic, and isolating the run stops the comma migrating. */
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.resultHighlight .resultValue {
+  color: #fff;
+}
+
+.disclaimer {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--web-text-on-light-muted);
+}

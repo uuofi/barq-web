@@ -10,7 +10,8 @@ import { env } from './env';
  * belongs in a component.
  */
 export const site = {
-  /** The wordmark as it actually appears on brand assets (jacket, delivery box, logo lockup). */
+  /** The wordmark as it appears on brand assets — the rider's jacket, the
+   * delivery box, and every header/footer lockup all read «برق». */
   name: 'برق',
   nameEn: 'Al-Barq',
   legalName: 'شركة برق للتوصيل',
@@ -46,10 +47,16 @@ export const site = {
     whatsapp: env.contact.whatsapp,
   },
 
+  /**
+   * Empty string = the icon is not rendered. The footer and contact page both
+   * filter on truthiness rather than shipping a link to a page that does not
+   * exist yet — a social icon that goes nowhere is worse than no icon.
+   */
   social: {
     facebook: '',
     instagram: '',
     x: '',
+    linkedin: '',
     telegram: '',
   },
 

@@ -1,0 +1,29 @@
+/**
+ * Merchants page — the split band that pairs the feature checklist with the
+ * dashboard screenshot.
+ */
+
+.split {
+  display: grid;
+  /* The screenshot is the wider half: it is the evidence, the list is the
+     caption. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+@media (max-width: 60rem) {
+  .split {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+/* The screenshot sits on a violet-lit plinth so a light UI screenshot does
+   not float unanchored on a light canvas. */
+.screenshot {
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background-image: var(--web-gradient-primary);
+  box-shadow: var(--web-shadow-cta);
+}

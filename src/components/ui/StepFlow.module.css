@@ -1,0 +1,127 @@
+/**
+ * The arrow-connected process row: medallion → arrow → medallion → arrow …
+ *
+ * Appears on Home ("كيف يعمل البرق؟"), Merchants ("كيف يعمل الطلب؟"), Drivers
+ * ("طريقة العمل") and the How-it-works page, at 4, 5 and 6 steps.
+ */
+
+.flow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+  /* Keeps every step the same width so the arrows sit on a straight line
+     regardless of label length. */
+  flex: 1 1 0;
+  min-inline-size: 0;
+  max-inline-size: 11rem;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--web-text-on-light);
+  line-height: var(--leading-tight);
+}
+
+.caption {
+  font-size: var(--text-xs);
+  color: var(--web-text-on-light-muted);
+  line-height: var(--leading-normal);
+}
+
+.onDark .label {
+  color: var(--web-text-on-dark);
+}
+
+.onDark .caption {
+  color: var(--web-text-on-dark-muted);
+}
+
+/* --- Connector ---------------------------------------------------------- */
+
+.arrow {
+  flex: 0 0 auto;
+  /* Aligns the arrow with the vertical centre of the medallions rather than
+     the centre of the whole step (medallion + two lines of label). */
+  margin-block-start: 1.5rem;
+  color: var(--web-primary);
+  opacity: 0.55;
+}
+
+.onDark .arrow {
+  color: var(--web-primary-light);
+}
+
+.arrow svg {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+
+/* The arrow glyph points inline-end. In an RTL document that is left, which
+   is what the base icon already draws; in LTR it must be mirrored. Doing it
+   with a transform rather than shipping a second icon keeps the two
+   directions provably identical. */
+:global([dir='ltr']) .arrow svg {
+  transform: scaleX(-1);
+}
+
+/* --- Responsive --------------------------------------------------------- */
+
+/* Below tablet the row cannot hold 4–6 steps legibly. It becomes a grid and
+   the connectors are dropped: the numbered reading order carries the
+   sequence, and rotated arrows in a wrapping grid point at the wrong
+   neighbours. */
+@media (max-width: 60rem) {
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  .step {
+    max-inline-size: none;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
+
+/* --- Numbered badge ----------------------------------------------------- */
+
+/* A small ordinal chip on the medallion, so the sequence survives when the
+   connectors are dropped on small screens. */
+.medallionWrap {
+  position: relative;
+}
+
+.ordinal {
+  position: absolute;
+  inset-block-start: -0.25rem;
+  inset-inline-end: -0.25rem;
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border-radius: 50%;
+  background-color: var(--web-primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: var(--weight-bold);
+  /* Tabular figures so a 1 and a 4 occupy the same width. */
+  font-variant-numeric: tabular-nums;
+  border: 2px solid var(--web-surface);
+}
+
+.onDark .ordinal {
+  border-color: var(--web-ink);
+}

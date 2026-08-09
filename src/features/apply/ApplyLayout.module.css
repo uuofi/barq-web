@@ -1,0 +1,262 @@
+/**
+ * The shell both application wizards render inside: a single white card with a
+ * progress bar at the top and the step's navigation buttons at the bottom.
+ */
+
+.card {
+  max-inline-size: 44rem;
+  margin-inline: auto;
+  padding: var(--space-xl);
+  background-color: var(--web-surface);
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--web-card-shadow);
+}
+
+@media (max-width: 40rem) {
+  .card {
+    padding: var(--space-lg);
+  }
+}
+
+/* --- Progress ------------------------------------------------------------- */
+
+.progressHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-block-end: var(--space-sm);
+}
+
+.stepLabel {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--web-text-on-light);
+}
+
+.progressValue {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--web-primary-strong);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.track {
+  block-size: 0.5rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--web-surface-alt);
+  overflow: hidden;
+}
+
+.bar {
+  block-size: 100%;
+  border-radius: var(--radius-pill);
+  background-image: var(--web-gradient-primary);
+  /* Animating `inline-size` here (rather than a transform) is deliberate: the
+     bar is the only thing in its own layer, the change is 200ms, and a scaled
+     transform would smear the rounded end cap. */
+  transition: inline-size var(--duration-slow) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transition-duration: 1ms;
+  }
+}
+
+/* --- Step body ------------------------------------------------------------ */
+
+.stepTitle {
+  margin-block: var(--space-xl) var(--space-lg);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.fields {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+@media (max-width: 40rem) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Footer navigation ---------------------------------------------------- */
+
+.footer {
+  display: flex;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-xl);
+  padding-block-start: var(--space-lg);
+  border-block-start: 1px solid var(--web-divider-light);
+}
+
+/* The forward action takes the remaining width, so "التالي" is always the
+   larger, more obvious target — and on the first step, where there is no
+   "السابق", it fills the row. */
+.footerPrimary {
+  flex: 1;
+}
+
+.footerSecondary {
+  flex: 0 0 auto;
+}
+
+/* --- Review summary ------------------------------------------------------- */
+
+.summary {
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.6fr) minmax(0, 1fr);
+  gap: var(--space-md);
+  padding: 0.7rem var(--space-md);
+}
+
+.summaryRow:nth-child(odd) {
+  background-color: var(--web-surface-alt);
+}
+
+.summaryLabel {
+  font-size: var(--text-sm);
+  color: var(--web-text-on-light-muted);
+}
+
+.summaryValue {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--web-text-on-light);
+  overflow-wrap: anywhere;
+}
+
+.reviewLead {
+  margin-block-end: var(--space-lg);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--web-text-on-light-muted);
+}
+
+/* --- Submission feedback --------------------------------------------------- */
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background-color: rgb(239 68 68 / 0.1);
+  color: #b91c1c;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.errorIcon {
+  inline-size: 1.15rem;
+  block-size: 1.15rem;
+  flex-shrink: 0;
+  margin-block-start: 0.15rem;
+}
+
+/* --- Document upload ------------------------------------------------------ */
+
+.uploads {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+@media (max-width: 40rem) {
+  .uploads {
+    grid-template-columns: 1fr;
+  }
+}
+
+.upload {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-block-size: 8rem;
+  padding: var(--space-md);
+  background-color: var(--web-surface-alt);
+  border: 1.5px dashed var(--web-card-border-strong);
+  border-radius: var(--radius-md);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out);
+}
+
+.upload:hover {
+  border-color: var(--web-primary);
+}
+
+/* The file input covers the whole box but stays a real, focusable input, so
+   keyboard users reach it and Enter opens the picker. */
+.uploadInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  cursor: pointer;
+}
+
+.upload:has(.uploadInput:focus-visible) {
+  outline: 2px solid var(--web-primary);
+  outline-offset: 2px;
+}
+
+.uploadFilled {
+  border-style: solid;
+  border-color: var(--web-success);
+  background-color: rgb(16 185 129 / 0.08);
+}
+
+.uploadIcon {
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  color: var(--web-primary);
+}
+
+.uploadFilled .uploadIcon {
+  color: var(--web-success);
+}
+
+.uploadLabel {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--web-text-on-light);
+}
+
+.uploadHint {
+  font-size: var(--text-xs);
+  color: var(--web-text-on-light-muted);
+  overflow-wrap: anywhere;
+}
+
+.uploadError {
+  margin-block-start: var(--space-sm);
+}

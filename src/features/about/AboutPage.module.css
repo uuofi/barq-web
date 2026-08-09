@@ -1,0 +1,127 @@
+/* --- Timeline ("رحلتنا") --------------------------------------------------
+   Four cards on one row at desktop, connected by a rule that runs behind
+   them. Below tablet the rule is dropped and the cards stack. */
+
+.timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+
+/* The connecting rule. Drawn as a pseudo-element on the container rather than
+   as borders on the cards, so it stays continuous regardless of card height. */
+.timeline::before {
+  content: '';
+  position: absolute;
+  inset-inline: 8%;
+  inset-block-start: 2.25rem;
+  block-size: 2px;
+  background: linear-gradient(
+    to left,
+    transparent,
+    var(--web-card-border-strong) 15%,
+    var(--web-card-border-strong) 85%,
+    transparent
+  );
+  z-index: 0;
+}
+
+@media (max-width: 60rem) {
+  .timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .timeline::before {
+    display: none;
+  }
+}
+
+@media (max-width: 36rem) {
+  .timeline {
+    grid-template-columns: 1fr;
+  }
+}
+
+.entry {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  background-color: var(--web-surface);
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--web-card-shadow);
+  text-align: center;
+}
+
+.year {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 4.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-pill);
+  background-image: var(--web-gradient-primary);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  /* Keeps "2024" LTR inside the RTL paragraph flow. */
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.entryTitle {
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.entryBody {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--web-text-on-light-muted);
+}
+
+/* --- Vision / mission ----------------------------------------------------- */
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xl);
+}
+
+@media (max-width: 48rem) {
+  .pillars {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  background-color: rgb(255 255 255 / 0.04);
+  border: 1px solid var(--web-ink-card-border);
+}
+
+.pillarTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-dark);
+}
+
+.pillarBody {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--web-text-on-dark-muted);
+  max-inline-size: 32rem;
+}

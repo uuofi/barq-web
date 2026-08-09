@@ -1,12 +1,12 @@
 /**
- * Header — matches the approved home page design exactly.
+ * Header — matches the approved design exactly.
  *
  * The header uses a fixed left-to-right slot order (logo far left, primary
  * action far right) that does NOT flip with the page's RTL text direction —
  * this is the specific layout in the approved design, not a generic RTL
- * mirror. `.inner` is pinned to `direction: ltr` for that reason; `.nav`
- * re-establishes `direction: rtl` inside so the Arabic labels still read in
- * natural order (see the comment on `.nav` below).
+ * mirror. `.inner` is pinned to `direction: ltr` for that reason; `.nav` and
+ * `.actions` re-establish `direction: rtl` inside so the Arabic labels still
+ * read in natural order (see the comment on `.nav` below).
  */
 
 .header {
@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   block-size: 4.75rem;
 }
 
@@ -38,17 +38,19 @@
   flex-shrink: 0;
 }
 
+/* The asset is already a rounded squircle on a transparent ground, so no
+   clipping is applied here — a second border-radius would just double up on
+   what the PNG already draws. */
 .brandIcon {
   inline-size: 1.4em;
   block-size: 1.4em;
-  color: var(--web-primary-light);
 }
 
 /* --- Nav ------------------------------------------------------------------
    `direction: rtl` here means the FIRST <li> in markup (nav.home) renders at
-   the right edge of this block — i.e. closest to the CTA button, exactly as
-   in the approved design — while later items step further left toward the
-   logo. This is independent of `.inner`'s own ltr slot order above. */
+   the right edge of this block — i.e. closest to the logo, exactly as in the
+   approved design — while later items step further left toward the CTA. This
+   is independent of `.inner`'s own ltr slot order above. */
 
 .nav {
   direction: rtl;
@@ -60,7 +62,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-xl);
+  gap: clamp(0.75rem, 0.2rem + 1.1vw, 1.75rem);
   flex-wrap: wrap;
 }
 
@@ -68,27 +70,51 @@
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
   color: var(--web-text-on-dark-muted);
-  padding-block: var(--space-xs);
+  /* Vertical padding rather than height: it grows the hit area to a
+     comfortable size without making the label box look loose. */
+  padding-block: 0.6rem;
+  padding-inline: 0.125rem;
   transition: color var(--duration-base) var(--ease-out);
   white-space: nowrap;
+  position: relative;
 }
 
 .navLink:hover {
   color: var(--web-text-on-dark);
 }
 
+/* The active route. Colour ALONE would fail `color-not-only`, so the current
+   page also carries an underline bar — two independent signals. */
 .navLink[aria-current='page'] {
   color: var(--web-primary-light);
 }
 
-/* --- CTA ------------------------------------------------------------------ */
+.navLink[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0.15rem;
+  block-size: 2px;
+  border-radius: 2px;
+  background-color: var(--web-primary-light);
+}
+
+/* --- Actions -------------------------------------------------------------- */
+
+.actions {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-shrink: 0;
+}
 
 .cta {
-  direction: rtl;
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
   flex-shrink: 0;
+  min-block-size: 2.75rem;
   background: var(--web-gradient-primary);
   color: var(--web-text-on-dark);
   font-size: var(--text-sm);
@@ -96,6 +122,7 @@
   padding: 0.65rem 1.375rem;
   border-radius: var(--radius-pill);
   box-shadow: var(--web-shadow-cta);
+  white-space: nowrap;
   transition:
     transform var(--duration-fast) var(--ease-out),
     box-shadow var(--duration-fast) var(--ease-out);
@@ -112,13 +139,15 @@
 }
 
 /* --- Mobile toggle & panel -------------------------------------------------
-   Not part of the approved desktop screenshot, but required for the header
-   to function below the breakpoint where the nav list can no longer fit. */
+   Not part of the approved desktop screenshot, but required for the header to
+   function below the breakpoint where the nav list can no longer fit. */
 
 .menuToggle {
   display: none;
   color: var(--web-text-on-dark);
-  padding: var(--space-xs);
+  /* 44×44 minimum target, met by padding around a 24px icon. */
+  padding: 0.625rem;
+  border-radius: var(--radius-sm);
 }
 
 @media (max-width: 63.9975rem) {
@@ -131,26 +160,62 @@
     padding-block: var(--space-md);
     transform: translateY(-8px);
     opacity: 0;
+    /* `visibility` — not just opacity — is what actually removes the closed
+       panel from the tab order. Without it a keyboard user tabs through
+       seven invisible links before reaching the page. It is transitioned
+       with a delay so the fade-out still plays before the panel is hidden. */
+    visibility: hidden;
     pointer-events: none;
+    max-block-size: calc(100dvh - 4.75rem);
+    overflow-y: auto;
     transition:
       opacity var(--duration-base) var(--ease-out),
-      transform var(--duration-base) var(--ease-out);
+      transform var(--duration-base) var(--ease-out),
+      visibility 0s linear var(--duration-base);
   }
 
   .nav[data-open='true'] {
     transform: translateY(0);
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
+    transition-delay: 0s;
   }
 
   .navList {
     flex-direction: column;
-    align-items: flex-end;
-    gap: var(--space-md);
+    align-items: stretch;
+    gap: var(--space-xs);
     padding-inline: var(--container-gutter);
+  }
+
+  .navLink {
+    display: block;
+    padding-block: 0.75rem;
+    text-align: start;
+  }
+
+  .navLink[aria-current='page']::after {
+    inset-inline: auto 0;
+    inline-size: 1.5rem;
   }
 
   .menuToggle {
     display: inline-flex;
+    order: 3;
+  }
+
+  .actions {
+    order: 2;
+  }
+}
+
+/* Below 30rem the CTA label plus the burger crowds the logo out. The CTA
+   keeps its icon and drops to the compact padding rather than disappearing —
+   it is the header's only conversion path. */
+@media (max-width: 30rem) {
+  .cta {
+    padding-inline: 0.9rem;
+    font-size: var(--text-xs);
   }
 }

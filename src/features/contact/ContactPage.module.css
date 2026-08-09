@@ -1,0 +1,194 @@
+/**
+ * Contact — the info panel beside the message form, with the map beneath.
+ */
+
+.split {
+  display: grid;
+  /* The form is the wider half: it is the primary action on the page, the
+     info panel is the fallback for people who would rather phone. */
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+@media (max-width: 60rem) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Info panel ------------------------------------------------------------ */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  background-color: var(--web-surface);
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--web-card-shadow);
+}
+
+.panelTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.details {
+  display: grid;
+  gap: var(--space-md);
+  font-style: normal;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.detailBody {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.detailLabel {
+  font-size: var(--text-xs);
+  color: var(--web-text-on-light-muted);
+}
+
+.detailValue {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--web-text-on-light);
+  /* Long emails must wrap rather than widen the grid column. */
+  overflow-wrap: anywhere;
+}
+
+/* Contact rows that are links get the full-row hit area, not just the text. */
+a.detail {
+  border-radius: var(--radius-md);
+  margin-inline: calc(var(--space-sm) * -1);
+  padding-inline: var(--space-sm);
+  padding-block: 0.25rem;
+  transition: background-color var(--duration-base) var(--ease-out);
+}
+
+a.detail:hover {
+  background-color: var(--web-surface-alt);
+}
+
+a.detail:hover .detailValue {
+  color: var(--web-primary-strong);
+}
+
+/* --- Social --------------------------------------------------------------- */
+
+.socialTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+  margin-block-end: var(--space-sm);
+}
+
+.social {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.socialLink {
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: 50%;
+  background-color: var(--web-medallion-bg);
+  color: var(--web-primary);
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
+}
+
+.socialLink:hover {
+  background-color: var(--web-primary);
+  color: #fff;
+}
+
+.socialLink svg {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+}
+
+/* --- Form ----------------------------------------------------------------- */
+
+.form {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  background-color: var(--web-surface);
+  border: 1px solid var(--web-card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--web-card-shadow);
+}
+
+@media (max-width: 30rem) {
+  .form,
+  .panel {
+    padding: var(--space-lg);
+  }
+}
+
+.formTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--web-text-on-light);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+@media (max-width: 40rem) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Submission feedback --------------------------------------------------- */
+
+.feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.feedbackSuccess {
+  background-color: rgb(16 185 129 / 0.12);
+  color: #047857;
+}
+
+.feedbackError {
+  background-color: rgb(239 68 68 / 0.1);
+  color: #b91c1c;
+}
+
+.feedbackIcon {
+  inline-size: 1.15rem;
+  block-size: 1.15rem;
+  flex-shrink: 0;
+  margin-block-start: 0.15rem;
+}
+
+/* --- Map ------------------------------------------------------------------- */
+
+.map {
+  margin-block-start: var(--space-2xl);
+}

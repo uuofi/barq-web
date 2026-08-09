@@ -146,4 +146,31 @@
   --web-radius-icon: 1rem;
   --web-shadow-cta: 0 12px 32px rgb(124 58 237 / 0.35);
   --web-divider-light: rgb(21 19 43 / 0.1);
+
+  /* --- Marketing surfaces ---------------------------------------------
+     The board alternates three canvases down every page: the dark ink
+     canvas (heroes, stat bands, closing CTA), the white canvas (feature
+     grids), and a barely-tinted violet canvas that separates two white
+     sections without introducing a third hue. */
+  --web-canvas-tint: #f7f5ff;
+  --web-card-border: rgb(21 19 43 / 0.08);
+  --web-card-border-strong: rgb(124 58 237 / 0.28);
+  --web-card-shadow: 0 2px 4px rgb(21 19 43 / 0.04), 0 12px 28px rgb(21 19 43 / 0.06);
+  --web-card-shadow-hover: 0 4px 8px rgb(21 19 43 / 0.05), 0 20px 44px rgb(124 58 237 / 0.16);
+
+  /* Icon medallions: a violet-tinted disc behind a violet stroke icon.
+     One token pair so all 40+ medallions on the site stay identical. */
+  --web-medallion-bg: rgb(124 58 237 / 0.1);
+  --web-medallion-bg-dark: rgb(139 92 246 / 0.16);
+
+  /* Dark-canvas surfaces. Cards on ink need their own border/fill: the
+     light-canvas values are invisible against #06060f. */
+  --web-ink-card: #101026;
+  --web-ink-card-border: rgb(167 139 250 / 0.2);
+
+  --web-success: #10b981;
+  --web-danger: #ef4444;
+
+  /* Section rhythm — the board's vertical spacing between bands. */
+  --web-section-block: clamp(3.5rem, 2.5rem + 4.5vw, 6rem);
 }

@@ -26,14 +26,29 @@ const SITE_URL = (process.env.VITE_SITE_URL || 'https://barq-iq.site').replace(/
 /**
  * Must mirror the `sitemap.include === true` entries in routes.tsx.
  *
- * /about, /coverage, /merchants, /drivers, /faq are deliberately absent:
- * they now redirect to sections of `/` (see AboutSection.tsx, CoverageSection.tsx
- * etc. via HomePage.tsx) and are no longer unique canonical URLs.
+ * The marketing pages (/about, /services, /merchants, /drivers, /coverage,
+ * /pricing, /blog, /how-it-works) are each a real route with its own canonical
+ * URL again — they were briefly anchored sections of `/` and are listed here
+ * once more.
+ *
+ * Deliberately absent: /track and /track/:code (per-order pages must never be
+ * indexed, and the tracking feature is flagged off), and /apply/success (a
+ * confirmation page has no standalone search value).
  */
 const ROUTES = [
   { path: '/', priority: 1.0, changefreq: 'weekly' },
-  { path: '/download', priority: 0.8, changefreq: 'monthly' },
+  { path: '/about', priority: 0.7, changefreq: 'monthly' },
+  { path: '/services', priority: 0.9, changefreq: 'monthly' },
+  { path: '/merchants', priority: 0.9, changefreq: 'monthly' },
+  { path: '/drivers', priority: 0.9, changefreq: 'monthly' },
+  { path: '/blog', priority: 0.6, changefreq: 'weekly' },
+  { path: '/pricing', priority: 0.8, changefreq: 'monthly' },
+  { path: '/how-it-works', priority: 0.7, changefreq: 'monthly' },
+  { path: '/coverage', priority: 0.7, changefreq: 'monthly' },
   { path: '/contact', priority: 0.5, changefreq: 'yearly' },
+  { path: '/apply/driver', priority: 0.8, changefreq: 'yearly' },
+  { path: '/apply/merchant', priority: 0.8, changefreq: 'yearly' },
+  { path: '/download', priority: 0.8, changefreq: 'monthly' },
   { path: '/legal/terms', priority: 0.3, changefreq: 'yearly' },
   { path: '/legal/privacy', priority: 0.3, changefreq: 'yearly' },
   // Account deletion. Indexed on purpose — Google Play and the App Store

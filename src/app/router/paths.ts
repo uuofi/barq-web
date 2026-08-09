@@ -16,9 +16,27 @@ export const paths = {
   drivers: '/drivers',
 
   about: '/about',
+  services: '/services',
+  howItWorks: '/how-it-works',
+  /** "المدن التي نخدمها" — the served-cities page. */
   coverage: '/coverage',
+  pricing: '/pricing',
+  blog: '/blog',
   faq: '/faq',
   contact: '/contact',
+
+  /**
+   * The two application funnels. Each is a single route that owns its own
+   * step state rather than a route per step: a half-filled application is not
+   * a shareable, bookmarkable, or reloadable destination, and giving each
+   * step a URL would promise exactly that and then lose the data on refresh.
+   */
+  apply: {
+    driver: '/apply/driver',
+    merchant: '/apply/merchant',
+    /** Terminal confirmation, reachable only by completing a funnel. */
+    success: '/apply/success',
+  },
 
   download: '/download',
 

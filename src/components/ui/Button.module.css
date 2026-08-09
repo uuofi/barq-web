@@ -1,0 +1,166 @@
+/**
+ * The one button in the design. Every CTA on every page is this component.
+ *
+ * The board uses exactly four treatments, and they are chosen by CANVAS, not
+ * by whim: `primary` is the only filled violet button and there is never more
+ * than one per section (the `primary-action` rule); `outline` is its partner
+ * on the ink canvas; `light` is its partner on the white canvas; `ghost` is
+ * for tertiary links that must not read as buttons at all.
+ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+
+  /* 44px floor via padding + min-block-size, so the target stays legal even
+     when the label is a single short Arabic word. */
+  min-block-size: 2.75rem;
+  padding-inline: var(--space-lg);
+  padding-block: 0.625rem;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  cursor: pointer;
+  /* Removes the 300ms tap delay without disabling pinch-zoom. */
+  touch-action: manipulation;
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  /* Material's disabled emphasis. Paired with a not-allowed cursor so the
+     control never looks tappable-but-dead. */
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Press feedback. Scoped to :active on enabled buttons only, and it scales
+   rather than moving — no surrounding content shifts. */
+.button:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition-duration: 1ms;
+  }
+  .button:not(:disabled):active {
+    transform: none;
+  }
+}
+
+/* --- Variants ---------------------------------------------------------- */
+
+.primary {
+  background-color: var(--web-primary);
+  color: #fff;
+  box-shadow: var(--web-shadow-cta);
+}
+
+.primary:not(:disabled):hover,
+.primary:not(:disabled):focus-visible {
+  background-color: var(--web-primary-strong);
+}
+
+/* Secondary CTA on the ink canvas: transparent with a violet-lit border. */
+.outline {
+  background-color: transparent;
+  border-color: rgb(167 139 250 / 0.45);
+  color: var(--web-text-on-dark);
+}
+
+.outline:not(:disabled):hover,
+.outline:not(:disabled):focus-visible {
+  background-color: rgb(124 58 237 / 0.18);
+  border-color: var(--web-primary-light);
+}
+
+/* Secondary CTA on the white canvas. */
+.light {
+  background-color: #fff;
+  border-color: var(--web-card-border-strong);
+  color: var(--web-primary-strong);
+}
+
+.light:not(:disabled):hover,
+.light:not(:disabled):focus-visible {
+  background-color: var(--web-surface-alt);
+  border-color: var(--web-primary);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--web-primary-strong);
+  padding-inline: var(--space-sm);
+  box-shadow: none;
+}
+
+.ghost:not(:disabled):hover,
+.ghost:not(:disabled):focus-visible {
+  background-color: var(--web-primary-soft);
+}
+
+/* --- Sizes -------------------------------------------------------------- */
+
+.sm {
+  min-block-size: 2.5rem;
+  padding-inline: var(--space-md);
+  font-size: var(--text-xs);
+}
+
+.lg {
+  min-block-size: 3.25rem;
+  padding-inline: var(--space-xl);
+  font-size: var(--text-md);
+}
+
+.block {
+  inline-size: 100%;
+}
+
+.icon {
+  inline-size: 1.125em;
+  block-size: 1.125em;
+  flex-shrink: 0;
+}
+
+/* The in-flight spinner that replaces the label on submit. Sized in `em` so
+   it tracks whatever size variant the button is using. */
+.spinner {
+  inline-size: 1.1em;
+  block-size: 1.1em;
+  flex-shrink: 0;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2.4s;
+  }
+}

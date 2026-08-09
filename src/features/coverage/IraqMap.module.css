@@ -1,0 +1,127 @@
+/**
+ * The Iraq coverage map.
+ *
+ * Drawn as inline SVG rather than shipped as an image: the pins are live data
+ * (a city's live/soon state comes from the governorate enum), the labels are
+ * translated text a crawler and a screen reader can both read, and the whole
+ * thing is a few hundred bytes that scale perfectly at any size.
+ */
+
+.wrapper {
+  position: relative;
+  max-inline-size: 30rem;
+  margin-inline: auto;
+}
+
+.map {
+  inline-size: 100%;
+  block-size: auto;
+  overflow: visible;
+}
+
+/* --- Landmass ------------------------------------------------------------- */
+
+.outline {
+  fill: rgb(124 58 237 / 0.12);
+  stroke: rgb(167 139 250 / 0.5);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* --- Pins ----------------------------------------------------------------- */
+
+.pinDot {
+  fill: var(--web-primary-light);
+}
+
+.pinLive .pinDot {
+  fill: #fff;
+}
+
+/* The halo behind a live city's dot. Animated as a scale/opacity pulse —
+   transform and opacity only, so it never triggers layout. */
+.pinLive .pinHalo {
+  fill: var(--web-primary);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 2.6s var(--ease-out) infinite;
+}
+
+.pinSoon .pinHalo {
+  fill: rgb(167 139 250 / 0.18);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.85;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pinLive .pinHalo {
+    animation: none;
+    opacity: 0.55;
+  }
+}
+
+.pinLabel {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: var(--weight-bold);
+  fill: var(--web-text-on-dark);
+  /* The label sits over the translucent landmass; a soft dark shadow keeps it
+     legible where two pins crowd each other. */
+  paint-order: stroke;
+  stroke: rgb(6 6 15 / 0.75);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.pinSoon .pinLabel {
+  fill: var(--web-text-on-dark-muted);
+  font-weight: var(--weight-semibold);
+}
+
+/* --- Legend --------------------------------------------------------------- */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-block-start: var(--space-lg);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--web-text-on-dark-muted);
+}
+
+.legendSwatch {
+  inline-size: 0.75rem;
+  block-size: 0.75rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendLive {
+  background-color: var(--web-primary);
+  border: 2px solid #fff;
+}
+
+.legendSoon {
+  background-color: transparent;
+  border: 2px solid rgb(167 139 250 / 0.6);
+}
