@@ -305,19 +305,49 @@ describe('the driver apply page', () => {
     );
   });
 
-  it('rejects an oversized photo locally, without spending an upload', async () => {
+  it('rejects a format the backend cannot store, without spending an upload', async () => {
     renderPage();
     await awaitPage();
 
-    const huge = new File(['x'], 'huge.jpg', { type: 'image/jpeg' });
-    Object.defineProperty(huge, 'size', { value: 6 * 1024 * 1024 });
     fireEvent.change(document.querySelector('input[type="file"]') as HTMLInputElement, {
-      target: { files: [huge] },
+      target: { files: [new File(['x'], 'scan.pdf', { type: 'application/pdf' })] },
     });
 
     await waitFor(() =>
-      expect(screen.getByText('حجم الصورة كبير. الحد الأقصى 5 ميغابايت.')).toBeInTheDocument()
+      expect(
+        screen.getByText('الصيغة غير مدعومة. اختر صورة JPG أو PNG أو WebP.')
+      ).toBeInTheDocument()
     );
     expect(post).not.toHaveBeenCalled();
+  });
+
+  /**
+   * The failure the applicant actually reported: the upload churns, then dies
+   * with a message that names no cause. Each of these needs its own sentence —
+   * "retry", "check your connection" and "the server refused this file" are
+   * different instructions, and one generic string makes the real problem
+   * invisible in a screenshot.
+   */
+  it.each([
+    [new RequestError('تعذّر الاتصال بالخادم', 0, [], 'ERR_NETWORK'), /تحقّق من اتصالك بالإنترنت/],
+    [new RequestError('انتهت مهلة الاتصال', 0, [], 'ECONNABORTED'), /استغرق رفع الصورة وقتاً طويلاً/],
+    [new RequestError('Payload Too Large', 413), /حجم الصورة كبير جداً/],
+    [new RequestError('Photo must be a JPEG, PNG, or WebP image', 400), /Photo must be a JPEG/],
+    [new RequestError('Too many photo uploads', 429), /Too many photo uploads/],
+    [new RequestError('Photo uploads are temporarily unavailable', 503), /temporarily unavailable/],
+  ])('explains upload failure %#, rather than showing one generic message', async (error, expected) => {
+    post.mockRejectedValue(error);
+
+    renderPage();
+    await awaitPage();
+
+    fireEvent.change(document.querySelector('input[type="file"]') as HTMLInputElement, {
+      target: { files: [new File(['x'], 'me.jpg', { type: 'image/jpeg' })] },
+    });
+
+    // Generous timeout: a NETWORK failure is retried once before it is shown
+    // (see queryClient.ts — a transient blip should heal itself rather than
+    // accuse the applicant's photo), and that retry is backed off ~1s.
+    await waitFor(() => expect(screen.getByText(expected)).toBeInTheDocument(), { timeout: 5000 });
   });
 });

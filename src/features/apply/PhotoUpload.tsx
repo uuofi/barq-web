@@ -4,6 +4,7 @@ import { UploadIcon, CloseIcon, PersonIcon } from '@/components/icons';
 import { cn } from '@/lib/utils/cn';
 import { RequestError } from '@/lib/http/RequestError';
 import { useUploadDriverPhoto } from './useApplyRegistration';
+import preparePhoto from './preparePhoto';
 import styles from './ApplyLayout.module.css';
 
 /**
@@ -55,6 +56,14 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
   const [preview, setPreview] = useState<string | null>(null);
   /** Client-side rejection (size/format); server failures come from `upload`. */
   const [localError, setLocalError] = useState<string | undefined>();
+  /** Decoding + downscaling, which happens before the request goes out. */
+  const [preparing, setPreparing] = useState(false);
+
+  // One flag for "the photo is not ready yet", covering both phases. The page
+  // uses it to block submit, so it must stay true across the handover from
+  // downscaling to uploading — a gap between them would let a submit slip
+  // through with photoUrl still empty.
+  const busy = preparing || upload.isPending;
 
   useEffect(() => {
     if (!preview) return undefined;
@@ -65,10 +74,10 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
   }, [preview]);
 
   useEffect(() => {
-    onUploadingChange?.(upload.isPending);
-  }, [upload.isPending, onUploadingChange]);
+    onUploadingChange?.(busy);
+  }, [busy, onUploadingChange]);
 
-  const handleFile = (file: File | undefined) => {
+  const handleFile = async (file: File | undefined) => {
     if (!file) return;
 
     setLocalError(undefined);
@@ -78,10 +87,6 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
       setLocalError(t('apply.driver.form.photoFormat'));
       return;
     }
-    if (file.size > MAX_BYTES) {
-      setLocalError(t('apply.driver.form.photoTooLarge'));
-      return;
-    }
 
     setPreview(URL.createObjectURL(file));
     // Drop any previously uploaded URL right away: until this upload resolves
@@ -89,7 +94,25 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
     // submit landing in that gap would send the OLD photo.
     onChange('');
 
-    upload.mutate(file, {
+    // Shrunk BEFORE the size check, not after: a 9MB camera photo is a
+    // perfectly good application photo once it is 1280px wide, and rejecting
+    // it for its original size would turn "take a picture of yourself" into a
+    // task requiring an image editor. Only a file that is still too big after
+    // downscaling — which in practice means it never decoded — is refused.
+    setPreparing(true);
+    let prepared: File;
+    try {
+      prepared = await preparePhoto(file);
+    } finally {
+      setPreparing(false);
+    }
+
+    if (prepared.size > MAX_BYTES) {
+      setLocalError(t('apply.driver.form.photoTooLarge'));
+      return;
+    }
+
+    upload.mutate(prepared, {
       onSuccess: ({ url }) => onChange(url),
     });
   };
@@ -104,13 +127,7 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
     if (inputRef.current) inputRef.current.value = '';
   };
 
-  const uploadError = upload.isError
-    ? // A 429 from the upload throttle says something specific and actionable;
-      // everything else is "try again", which is all the applicant can do.
-      RequestError.is(upload.error) && upload.error.isRateLimited
-      ? upload.error.message
-      : t('apply.driver.form.photoUploadFailed')
-    : undefined;
+  const uploadError = upload.isError ? describeUploadFailure(upload.error, t) : undefined;
 
   const shownError = localError ?? uploadError ?? error;
   const hasPhoto = Boolean(preview || value);
@@ -129,7 +146,7 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
         <div
           className={cn(
             styles.photoPreview,
-            upload.isPending && styles.photoPreviewBusy,
+            busy && styles.photoPreviewBusy,
             shownError && styles.photoPreviewInvalid
           )}
         >
@@ -139,7 +156,7 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
             <PersonIcon className={styles.photoPlaceholder} aria-hidden="true" />
           )}
 
-          {upload.isPending ? <span className={styles.photoSpinner} aria-hidden="true" /> : null}
+          {busy ? <span className={styles.photoSpinner} aria-hidden="true" /> : null}
         </div>
 
         <div className={styles.photoActions}>
@@ -160,7 +177,7 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
             accept={ACCEPT}
             aria-invalid={Boolean(shownError) || undefined}
             aria-describedby={shownError ? errorId : undefined}
-            onChange={(event) => handleFile(event.target.files?.[0])}
+            onChange={(event) => void handleFile(event.target.files?.[0])}
           />
 
           {hasPhoto ? (
@@ -181,8 +198,9 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
         whatever field they have moved on to.
       */}
       <p className={styles.photoStatus} aria-live="polite">
+        {preparing ? t('apply.driver.form.photoPreparing') : null}
         {upload.isPending ? t('apply.driver.form.photoUploading') : null}
-        {!upload.isPending && value ? t('apply.driver.form.photoReady') : null}
+        {!busy && value ? t('apply.driver.form.photoReady') : null}
       </p>
 
       {shownError ? (
@@ -193,6 +211,37 @@ export const PhotoUpload = ({ value, onChange, error, onUploadingChange }: Photo
       ) : null}
     </div>
   );
+};
+
+/**
+ * Turns an upload failure into a sentence that names the actual problem.
+ *
+ * This matters more than it looks. Every one of these arrives at the applicant
+ * as "the photo didn't upload", but the thing they should DO differs
+ * completely — retry, wait, use a different picture, or tell us the server is
+ * down. Collapsing them into one message also makes the failure undiagnosable
+ * from a screenshot, which is exactly how an upload bug stays open for days.
+ */
+const describeUploadFailure = (error: unknown, t: (key: string) => string): string => {
+  if (!RequestError.is(error)) return t('apply.driver.form.photoUploadFailed');
+
+  // Nothing came back at all: offline, the API host is unreachable, the dev
+  // proxy has no backend behind it, or a reverse proxy cut the connection.
+  if (error.isNetworkError) {
+    return error.code === 'ECONNABORTED'
+      ? t('apply.driver.form.photoTimeout')
+      : t('apply.driver.form.photoNoConnection');
+  }
+  // 413 comes from the proxy in front of the API, not from our own handler —
+  // its body carries no useful message, and often no CORS headers either.
+  if (error.status === 413) return t('apply.driver.form.photoTooLarge');
+  // The backend's own refusals (bad format, corrupt bytes, throttled, uploads
+  // directory unavailable) already carry a specific message; showing it beats
+  // any guess made here.
+  if (error.status === 400 || error.isRateLimited || error.status === 503) {
+    return error.message;
+  }
+  return t('apply.driver.form.photoUploadFailed');
 };
 
 export default PhotoUpload;
