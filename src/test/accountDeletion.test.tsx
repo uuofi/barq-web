@@ -141,8 +141,10 @@ describe('the deletion page', () => {
 
     expect(screen.getByText('بيانات تُحذف نهائياً')).toBeInTheDocument();
     expect(screen.getByText('بيانات تبقى')).toBeInTheDocument();
-    // The grace period must be stated on the page, not only in the receipt.
-    expect(screen.getByText(/٣٠ يوماً/)).toBeInTheDocument();
+    // The timeline must be stated on the page, not only in the receipt — and it
+    // must not promise a countdown, since nothing on the server runs one: the
+    // erasure happens when the administration acts on the request.
+    expect(screen.getByText(/تُمحى بياناتك الشخصية نهائياً عند تنفيذ إدارة برق للطلب/)).toBeInTheDocument();
   });
 
   it('does not call the API when the confirmation word is wrong', async () => {
@@ -155,14 +157,12 @@ describe('the deletion page', () => {
     expect(post).not.toHaveBeenCalled();
   });
 
-  it('replaces the form with the erasure date on success', async () => {
+  it('replaces the form with the deactivation receipt on success', async () => {
     post.mockResolvedValue({
       data: {
         success: true,
         data: {
           deletedAt: '2026-08-05T10:00:00.000Z',
-          purgeAt: '2026-09-04T10:00:00.000Z',
-          graceDays: 30,
           role: 'merchant',
         },
       },
@@ -174,7 +174,8 @@ describe('the deletion page', () => {
     fillAndSubmit(DELETION_CONFIRM_WORD);
 
     await waitFor(() => expect(screen.getByText('تم حذف حسابك')).toBeInTheDocument());
-    expect(screen.getByText('تاريخ المحو النهائي للبيانات')).toBeInTheDocument();
+    expect(screen.getByText('تاريخ الإيقاف')).toBeInTheDocument();
+    expect(screen.getByText('بانتظار المحو النهائي')).toBeInTheDocument();
     // A password field must not survive on screen after the account is gone.
     expect(screen.queryByLabelText('كلمة المرور')).not.toBeInTheDocument();
   });

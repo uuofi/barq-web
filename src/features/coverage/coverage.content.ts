@@ -59,6 +59,15 @@ export const MAP_CITIES: MapCity[] = [
     labelDy: -14,
     governorate: 'diwaniyah',
   },
+  {
+    id: 'samawah',
+    labelKey: 'coverage.city.samawah',
+    x: 261,
+    y: 334,
+    labelDx: 0,
+    labelDy: 21,
+    governorate: 'muthanna',
+  },
   { id: 'basra', labelKey: 'coverage.city.basra', x: 359, y: 378, labelDx: 0, labelDy: -14 },
 ];
 

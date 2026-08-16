@@ -58,7 +58,8 @@
     "boundaryTitle": "This section failed to render",
     "boundaryBody": "An error occurred while rendering the page. Try reloading.",
     "reload": "Reload page",
-    "featureDisabled": "This service is not available yet"
+    "featureDisabled": "This service is not available yet",
+    "phoneRegistered": "This phone number is already registered with us. If you already applied, we'll be in touch soon."
   },
 
   "forms": {
@@ -67,6 +68,8 @@
     "invalidEmail": "Invalid email address",
     "tooShort": "Too short",
     "tooLong": "Too long",
+    "passwordTooShort": "Password must be at least 6 characters",
+    "passwordMismatch": "Passwords don't match",
     "submitting": "Submitting...",
     "successTitle": "Submitted successfully",
     "errorTitle": "Submission failed"
@@ -347,54 +350,35 @@
 
     "driver": {
       "title": "Apply as a driver",
-      "subtitle": "Fill in the details below and we'll contact you within 48 hours",
-      "step1": {
-        "title": "Personal details",
+      "subtitle": "Create your driver account and start taking orders once the team approves it",
+      "form": {
+        "title": "Driver details",
+        "lead": "The same details the driver app asks for — fill them in and your application goes straight to the Al-Barq team for review.",
+        "photo": "Your photo",
+        "photoChoose": "Choose a photo",
+        "photoChange": "Change photo",
+        "photoRemove": "Remove",
+        "photoHint": "A clear photo of your face. Accepted formats: JPG, PNG or WebP, up to 5MB.",
+        "photoUploading": "Uploading photo...",
+        "photoReady": "Photo uploaded",
+        "photoRequired": "Your photo is required",
+        "photoFormat": "Unsupported format. Choose a JPG, PNG or WebP image.",
+        "photoTooLarge": "That photo is too large. The limit is 5MB.",
+        "photoUploadFailed": "Couldn't upload the photo, please try again",
+        "governorate": "Governorate",
+        "governoratePlaceholder": "Choose your governorate",
         "fullName": "Full name",
-        "fullNamePlaceholder": "Your full name as it appears on your ID",
+        "fullNamePlaceholder": "Enter your name",
         "phone": "Phone number",
         "phonePlaceholder": "07xxxxxxxxx",
-        "city": "City",
-        "cityPlaceholder": "Choose your city",
-        "birthDate": "Date of birth"
-      },
-      "step2": {
-        "title": "Vehicle details",
-        "vehicleType": "Vehicle type",
-        "vehicleMotorcycle": "Motorbike",
-        "vehicleCar": "Car",
-        "vehicleBicycle": "Bicycle",
-        "vehicleModel": "Vehicle model",
-        "vehicleModelPlaceholder": "e.g. Honda 2020",
-        "plateNumber": "Number plate",
-        "plateNumberPlaceholder": "e.g. A 12345"
-      },
-      "step3": {
-        "title": "Upload documents",
-        "hint": "Accepted formats: JPG, PNG or PDF, up to 5MB per file.",
-        "nationalId": "National ID",
-        "license": "Driving licence",
-        "vehicleReg": "Vehicle registration",
-        "upload": "Tap to upload",
-        "uploaded": "Uploaded",
-        "remove": "Remove file"
-      },
-      "step4": {
-        "title": "Experience & availability",
-        "experience": "Years of delivery experience",
-        "experienceNone": "No previous experience",
-        "experienceOne": "Less than a year",
-        "experienceThree": "1 to 3 years",
-        "experienceMore": "More than 3 years",
-        "availability": "Preferred working hours",
-        "availabilityMorning": "Mornings",
-        "availabilityEvening": "Evenings",
-        "availabilityFull": "Full time",
-        "notes": "Anything else",
-        "notesPlaceholder": "Anything you'd like us to know"
-      },
-      "step5": {
-        "title": "Review your application"
+        "password": "Password",
+        "passwordPlaceholder": "At least 6 characters",
+        "passwordHint": "You'll use this to log into the driver app once your application is approved.",
+        "confirmPassword": "Confirm password",
+        "confirmPasswordPlaceholder": "Re-enter your password",
+        "terms": "I agree to the <privacy>Privacy Policy</privacy> and the <terms>Terms & Conditions</terms>",
+        "termsRequired": "You must agree to the Privacy Policy and the Terms & Conditions",
+        "reviewNote": "Once submitted, your account sits with the team for review — you can log into the app as soon as it is approved."
       }
     },
 
@@ -412,8 +396,13 @@
         "email": "Email",
         "emailPlaceholder": "name@example.com",
         "city": "City",
+        "cityPlaceholder": "Choose your city",
         "address": "Store address",
-        "addressPlaceholder": "Area, street, nearest landmark"
+        "addressPlaceholder": "Area, street, nearest landmark",
+        "password": "Password",
+        "passwordPlaceholder": "At least 6 characters",
+        "passwordHint": "You'll use this to log into the merchant app once your application is approved.",
+        "confirmPassword": "Confirm password"
       },
       "step2": {
         "title": "Business type",
@@ -437,9 +426,9 @@
       "referenceLabel": "Reference number",
       "home": "Back to home",
       "nextTitle": "What happens next?",
-      "next1": "Our team reviews your details and documents.",
-      "next2": "We call you to confirm the information and agree an activation date.",
-      "next3": "We activate your account and send you your app login details."
+      "next1": "Our team reviews your details and your photo.",
+      "next2": "We may call you to confirm the information or request additional documents.",
+      "next3": "Once approved, you can log straight into the app with the phone number and password you entered."
     }
   },
 
@@ -524,7 +513,8 @@
       "najaf": "Najaf",
       "karbala": "Karbala",
       "kirkuk": "Kirkuk",
-      "diwaniyah": "Diwaniyah"
+      "diwaniyah": "Diwaniyah",
+      "samawah": "Samawah (Muthanna)"
     },
     "stat": {
       "cities": "major cities",
@@ -630,7 +620,7 @@
   "account": {
     "delete": {
       "title": "Delete account",
-      "lead": "You can delete your Al-Barq account here directly — no app required, and no support ticket. Read what happens first: once the recovery window closes, the step is permanent.",
+      "lead": "You can delete your Al-Barq account here directly — no app required, and no support ticket. Read what happens first: your account stops working the moment you confirm, and erasing the data is permanent.",
 
       "effects": {
         "title": "What happens when you delete",
@@ -647,7 +637,7 @@
           "item2": "The attendance-fee and payment ledger (drivers)",
           "note": "These records are kept with nothing tying them back to you personally. They belong to the other parties on an order and are needed for accounting and for settling any later dispute."
         },
-        "timeline": "Your account stops working the moment you confirm: no sign-in, no notifications, no presence on the platform. Your personal data is erased permanently 30 days later — and only during that window can support restore an account deleted by mistake."
+        "timeline": "Your account stops working the moment you confirm: no sign-in, no notifications, no presence on the platform. Your personal data is then erased permanently once Al-Barq's administration processes the request — and only until that moment can support restore an account deleted by mistake."
       },
 
       "requirements": {
@@ -686,8 +676,9 @@
         "title": "Your account has been deleted",
         "lead": "Your account was disabled immediately. It can no longer sign in or receive notifications.",
         "deactivatedLabel": "Disabled on",
-        "purgeLabel": "Data permanently erased on",
-        "undoNote": "If this was a mistake, contact support within {{days}} days to restore the account. After that date it cannot be recovered."
+        "statusLabel": "Data status",
+        "statusValue": "Awaiting permanent erasure",
+        "undoNote": "If this was a mistake, contact support right away to restore the account. Once the data is erased it cannot be recovered."
       },
 
       "support": {
@@ -759,7 +750,7 @@
         },
         "retention": {
           "title": "Data retention",
-          "p1": "We keep your account and order data for as long as you use the platform. When you delete your account it stops working immediately, and your personal data — name, phone number, email, photo, and store or vehicle details — is erased permanently 30 days after the deletion request. What remains afterwards is the order and financial records with nothing tying them back to you personally, to the extent needed for accounting purposes or to resolve a possible dispute over a past order, and to preserve the integrity of other parties' records tied to those same orders."
+          "p1": "We keep your account and order data for as long as you use the platform. When you delete your account it stops working immediately, and your personal data — name, phone number, email, photo, and store or vehicle details — is erased permanently once Al-Barq's administration processes the deletion request. What remains afterwards is the order and financial records with nothing tying them back to you personally, to the extent needed for accounting purposes or to resolve a possible dispute over a past order, and to preserve the integrity of other parties' records tied to those same orders."
         },
         "deletion": {
           "title": "Deleting your account",
@@ -800,7 +791,7 @@
         },
         "coverageArea": {
           "title": "Geographic coverage",
-          "p1": "Al-Barq's service currently covers Diwaniyah and Najaf governorates only, with further governorates planned over time (see the \"Coverage areas\" page). A merchant's or driver's account is tied to a single governorate at registration and cannot be changed by the account holder."
+          "p1": "Al-Barq's service currently covers the Diwaniyah, Najaf and Muthanna governorates only, with further governorates planned over time (see the \"Coverage areas\" page). A merchant's or driver's account is tied to a single governorate at registration and cannot be changed by the account holder."
         },
         "eligibility": {
           "title": "Eligibility to register",
@@ -905,7 +896,7 @@
       "description": "Get in touch with the Al-Barq team — phone, email, and a direct message form for your enquiries."
     },
     "applyDriver": {
-      "description": "Apply to work as a delivery driver with Al-Barq — submit your details and documents and we'll contact you within 48 hours."
+      "description": "Apply to work as a delivery driver with Al-Barq — create your account in one step and we'll review your application and contact you within 48 hours."
     },
     "applyMerchant": {
       "description": "Register your business with Al-Barq — receive delivery orders and track your sales from a single dashboard."

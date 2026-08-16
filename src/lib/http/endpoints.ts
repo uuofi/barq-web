@@ -55,7 +55,29 @@ export const ENDPOINT_REGISTRY = meta({
     note:
       'Needs POST /public/leads on the backend (merchant/driver signup interest) with its own ' +
       'rate limiter and spam protection, writing to a Lead collection — NOT to User. ' +
-      'Gate behind VITE_FEATURE_LEAD_FORMS.',
+      'Gate behind VITE_FEATURE_LEAD_FORMS. NOT used by the apply wizard — see `submitApplication`.',
+  },
+
+  submitApplication: {
+    path: '/public/applications',
+    status: 'live',
+    note:
+      "The driver/merchant apply forms (src/features/apply) submit here. It creates the SAME " +
+      '`pending_review` User a mobile-app signup creates, so the application appears in the admin ' +
+      "panel's approvals queue (delivery-admin ApprovalsPage) — but with NO SMS verification step, " +
+      'which is the whole reason it is a separate path from /auth/register (that one answers 202 ' +
+      'with an OTP challenge whenever OTP_ENABLED is on). No token is issued either way. ' +
+      'Rate-limited server-side to 3 per IP per hour — see delivery-backend/src/routes/public.routes.js.',
+  },
+
+  uploadDriverPhoto: {
+    path: '/uploads/driver-photo',
+    status: 'live',
+    note:
+      'Unauthenticated multipart upload (field name: `photo`, max 5MB, JPEG/PNG/WebP only, magic ' +
+      'numbers checked server-side). Called BEFORE the application is submitted — there is no ' +
+      'account yet at that point — and the URL it returns is sent as `driver.photoUrl`, which the ' +
+      "backend requires for a driver. Throttled to 20 per IP per 15 min.",
   },
 
   submitContact: {

@@ -1,121 +1,132 @@
-import { useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Seo from '@/components/seo/Seo';
 import { paths } from '@/app/router/paths';
 import { GOVERNORATES, GOVERNORATE_LABELS } from '@/config/constants';
-import { MotorbikeIcon, TruckIcon, RouteIcon } from '@/components/icons';
+import { CloseIcon } from '@/components/icons';
+import { Button, PageHero, Section, SelectField, TextField } from '@/components/ui';
+import { RequestError } from '@/lib/http/RequestError';
+// The card/field/footer chrome is shared with the merchant wizard; this page
+// renders it directly because it has a single step and so needs none of
+// ApplyLayout's step navigation.
+import styles from './ApplyLayout.module.css';
+import PhotoUpload from './PhotoUpload';
+import TermsAgreement from './TermsAgreement';
+import { useRegisterDriver } from './useApplyRegistration';
 import {
-  PageHero,
-  TextField,
-  TextAreaField,
-  SelectField,
-  ChoiceGroup,
-  type Choice,
-} from '@/components/ui';
-import { useSubmitLead } from '@/features/contact/useContactForm';
-import ApplyLayout, { ApplySummary, applyStyles as styles } from './ApplyLayout';
-import DocumentUpload from './DocumentUpload';
-import useWizard from './useWizard';
-import { DRIVER_STEP_SCHEMAS, type DriverApplication } from './apply.schema';
-
-const INITIAL: DriverApplication = {
-  fullName: '',
-  phone: '',
-  city: '',
-  birthDate: '',
-  vehicleType: '',
-  vehicleModel: '',
-  plateNumber: '',
-  nationalId: '',
-  license: '',
-  vehicleReg: '',
-  experience: '',
-  availability: '',
-  notes: '',
-};
+  DRIVER_INITIAL_VALUES,
+  driverApplicationSchema,
+  type DriverFormValues,
+} from './apply.schema';
 
 /**
- * Driver application — the five-step funnel ("تقديم طلب كسائق").
+ * The vehicle type every driver signs up with.
  *
- * Steps: personal details → vehicle → documents → experience & availability →
- * review.
+ * The backend requires one, and the app's own sign-up screen does not ask —
+ * it sends 'motorcycle' for everyone (see DEFAULT_VEHICLE_TYPE in
+ * driver-register.tsx) and lets an admin correct it during review. This form
+ * asks exactly what that screen asks, so it does the same. Changing this is a
+ * two-place edit, deliberately.
+ */
+const DEFAULT_VEHICLE_TYPE = 'motorcycle' as const;
+
+/**
+ * Driver application — "تقديم طلب كسائق".
  *
- * The uploaded `File` objects are held in a ref rather than in wizard state:
- * they are needed once, at submit, and putting a Blob in React state means
- * every keystroke on a later step re-renders against an object that cannot be
- * compared cheaply. Only the file NAMES live in validated state, which is what
- * the review screen and the schema actually need.
+ * A single screen asking for exactly what the driver app's sign-up screen asks
+ * for (delivery-app/app/(auth)/driver-register.tsx): photo, governorate, name,
+ * phone, password + confirmation, terms. Submitting creates the same locked
+ * `pending_review` account an in-app signup creates, so the request appears in
+ * the admin panel's approvals queue and the applicant can sign into the app the
+ * moment an admin approves it.
+ *
+ * It used to be a five-step wizard collecting birth date, vehicle details,
+ * three document uploads, experience and availability — none of which the app
+ * asked for and none of which the backend required. Those steps are gone: an
+ * applicant on the website and an applicant in the app now answer the same
+ * questions.
  */
 export const DriverApplyPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const submission = useSubmitLead();
-  const files = useRef<Record<string, File | null>>({});
+  const submission = useRegisterDriver();
+
+  const [values, setValues] = useState<DriverFormValues>(DRIVER_INITIAL_VALUES);
+  /** Field name → i18n key, resolved at the point of display. */
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState<string | undefined>();
+  const [photoUploading, setPhotoUploading] = useState(false);
 
-  const wizard = useWizard<DriverApplication>({
-    schemas: DRIVER_STEP_SCHEMAS,
-    initialValues: INITIAL,
-  });
+  const setValue = <K extends keyof DriverFormValues>(field: K, value: DriverFormValues[K]) => {
+    setValues((current) => ({ ...current, [field]: value }));
+    // Clear this field's error as soon as it changes, so a corrected input
+    // stops showing red immediately rather than waiting for the next submit.
+    setErrors((current) => {
+      if (!(field in current)) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  };
 
-  const { values, errors, setValue } = wizard;
+  /** Stable — <PhotoUpload> reports upload state through an effect. */
+  const handleUploadingChange = useCallback((uploading: boolean) => {
+    setPhotoUploading(uploading);
+  }, []);
 
-  /** Schema errors are i18n keys; resolve at the point of display. */
-  const errorFor = (field: keyof DriverApplication) => {
-    const key = errors[field as string];
+  const errorFor = (field: keyof DriverFormValues) => {
+    const key = errors[field];
     return key ? t(key) : undefined;
   };
 
-  const cityOptions = GOVERNORATES.map((id) => ({
+  const governorateOptions = GOVERNORATES.map((id) => ({
     value: id,
     label: GOVERNORATE_LABELS[id],
   }));
 
-  const vehicleChoices: Choice[] = [
-    { value: 'motorcycle', label: t('apply.driver.step2.vehicleMotorcycle'), icon: MotorbikeIcon },
-    { value: 'car', label: t('apply.driver.step2.vehicleCar'), icon: TruckIcon },
-    { value: 'bicycle', label: t('apply.driver.step2.vehicleBicycle'), icon: RouteIcon },
-  ];
-
-  const experienceChoices: Choice[] = [
-    { value: 'none', label: t('apply.driver.step4.experienceNone') },
-    { value: 'under-one', label: t('apply.driver.step4.experienceOne') },
-    { value: 'one-to-three', label: t('apply.driver.step4.experienceThree') },
-    { value: 'over-three', label: t('apply.driver.step4.experienceMore') },
-  ];
-
-  const availabilityChoices: Choice[] = [
-    { value: 'morning', label: t('apply.driver.step4.availabilityMorning') },
-    { value: 'evening', label: t('apply.driver.step4.availabilityEvening') },
-    { value: 'full', label: t('apply.driver.step4.availabilityFull') },
-  ];
-
-  const labelOf = (choices: Choice[], value: string) =>
-    choices.find((choice) => choice.value === value)?.label ?? '';
-
-  const stepTitles = [
-    t('apply.driver.step1.title'),
-    t('apply.driver.step2.title'),
-    t('apply.driver.step3.title'),
-    t('apply.driver.step4.title'),
-    t('apply.driver.step5.title'),
-  ];
-
   const handleSubmit = async () => {
     setSubmitError(undefined);
+
+    // Never submit over an upload in flight: `photoUrl` is still '' at that
+    // point, so this would fail validation and tell the applicant their photo
+    // is missing while they are watching it upload.
+    if (photoUploading) return;
+
+    const parsed = driverApplicationSchema.safeParse(values);
+    if (!parsed.success) {
+      const nextErrors: Record<string, string> = {};
+      for (const issue of parsed.error.issues) {
+        const field = issue.path[0];
+        // First error per field wins — three messages under one input is noise.
+        if (typeof field === 'string' && !(field in nextErrors)) {
+          nextErrors[field] = issue.message;
+        }
+      }
+      setErrors(nextErrors);
+      return;
+    }
+
+    setErrors({});
+
     try {
       await submission.mutateAsync({
         role: 'driver',
-        name: values.fullName,
-        phone: values.phone,
+        name: parsed.data.fullName,
+        phone: parsed.data.phone,
+        password: parsed.data.password,
+        governorate: parsed.data.governorate,
+        driver: {
+          vehicleType: DEFAULT_VEHICLE_TYPE,
+          photoUrl: parsed.data.photoUrl,
+        },
       });
       // `replace` — the confirmation must not be reachable by pressing Back
-      // from wherever the visitor goes next, which would suggest the
+      // from wherever the applicant goes next, which would suggest the
       // application can be submitted twice.
       navigate(paths.apply.success, { replace: true, state: { role: 'driver' } });
-    } catch {
-      setSubmitError(t('errors.generic'));
+    } catch (error) {
+      setSubmitError(resolveSubmitError(error, t));
     }
   };
 
@@ -129,211 +140,139 @@ export const DriverApplyPage = () => {
         align="center"
       />
 
-      <ApplyLayout
-        step={wizard.step}
-        totalSteps={wizard.totalSteps}
-        progress={wizard.progress}
-        stepTitle={stepTitles[wizard.step] ?? ''}
-        isFirst={wizard.isFirst}
-        isLast={wizard.isLast}
-        submitting={submission.isPending}
-        errorMessage={submitError}
-        onNext={wizard.next}
-        onPrevious={wizard.previous}
-        onSubmit={handleSubmit}
-      >
-        {/* ---------------- Step 1 — personal details ------------------- */}
-        {wizard.step === 0 && (
-          <div className={styles.fields}>
-            <TextField
-              label={t('apply.driver.step1.fullName')}
-              placeholder={t('apply.driver.step1.fullNamePlaceholder')}
-              required
-              autoComplete="name"
-              value={values.fullName}
-              error={errorFor('fullName')}
-              onChange={(event) => setValue('fullName', event.target.value)}
-            />
+      <Section canvas="tint" data-section="apply">
+        <div className={styles.card}>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              void handleSubmit();
+            }}
+            noValidate
+          >
+            <h2 className={styles.stepTitle}>{t('apply.driver.form.title')}</h2>
+            <p className={styles.reviewLead}>{t('apply.driver.form.lead')}</p>
 
-            <div className={styles.row}>
+            <div className={styles.fields}>
+              <PhotoUpload
+                value={values.photoUrl}
+                error={errorFor('photoUrl')}
+                onChange={(photoUrl) => setValue('photoUrl', photoUrl)}
+                onUploadingChange={handleUploadingChange}
+              />
+
+              <SelectField
+                label={t('apply.driver.form.governorate')}
+                placeholder={t('apply.driver.form.governoratePlaceholder')}
+                required
+                options={governorateOptions}
+                value={values.governorate}
+                error={errorFor('governorate')}
+                onChange={(event) => setValue('governorate', event.target.value)}
+              />
+
               <TextField
-                label={t('apply.driver.step1.phone')}
-                placeholder={t('apply.driver.step1.phonePlaceholder')}
+                label={t('apply.driver.form.fullName')}
+                placeholder={t('apply.driver.form.fullNamePlaceholder')}
+                required
+                autoComplete="name"
+                value={values.fullName}
+                error={errorFor('fullName')}
+                onChange={(event) => setValue('fullName', event.target.value)}
+              />
+
+              <TextField
+                label={t('apply.driver.form.phone')}
+                placeholder={t('apply.driver.form.phonePlaceholder')}
                 required
                 type="tel"
-                inputMode="tel"
+                inputMode="numeric"
                 autoComplete="tel"
                 dir="ltr"
+                maxLength={11}
                 value={values.phone}
                 error={errorFor('phone')}
-                onChange={(event) => setValue('phone', event.target.value)}
+                // Digits only, capped at 11 — the same keystroke filter the app
+                // applies, so "٠٧٧٠ 123 4567" pasted from a contact card cannot
+                // reach the 07XXXXXXXXX check as an unfixable failure.
+                onChange={(event) =>
+                  setValue('phone', event.target.value.replace(/\D/g, '').slice(0, 11))
+                }
               />
 
-              <TextField
-                label={t('apply.driver.step1.birthDate')}
-                required
-                type="date"
-                autoComplete="bday"
-                value={values.birthDate}
-                error={errorFor('birthDate')}
-                onChange={(event) => setValue('birthDate', event.target.value)}
-              />
-            </div>
+              <div className={styles.row}>
+                <TextField
+                  label={t('apply.driver.form.password')}
+                  placeholder={t('apply.driver.form.passwordPlaceholder')}
+                  required
+                  type="password"
+                  autoComplete="new-password"
+                  hint={t('apply.driver.form.passwordHint')}
+                  value={values.password}
+                  error={errorFor('password')}
+                  onChange={(event) => setValue('password', event.target.value)}
+                />
 
-            <SelectField
-              label={t('apply.driver.step1.city')}
-              placeholder={t('apply.driver.step1.cityPlaceholder')}
-              required
-              options={cityOptions}
-              value={values.city}
-              error={errorFor('city')}
-              onChange={(event) => setValue('city', event.target.value)}
-            />
-          </div>
-        )}
+                <TextField
+                  label={t('apply.driver.form.confirmPassword')}
+                  placeholder={t('apply.driver.form.confirmPasswordPlaceholder')}
+                  required
+                  type="password"
+                  autoComplete="new-password"
+                  value={values.confirmPassword}
+                  error={errorFor('confirmPassword')}
+                  onChange={(event) => setValue('confirmPassword', event.target.value)}
+                />
+              </div>
 
-        {/* ---------------- Step 2 — vehicle ---------------------------- */}
-        {wizard.step === 1 && (
-          <div className={styles.fields}>
-            <ChoiceGroup
-              legend={t('apply.driver.step2.vehicleType')}
-              name="vehicleType"
-              required
-              choices={vehicleChoices}
-              value={values.vehicleType}
-              error={errorFor('vehicleType')}
-              onChange={(value) => setValue('vehicleType', value)}
-            />
-
-            <div className={styles.row}>
-              <TextField
-                label={t('apply.driver.step2.vehicleModel')}
-                placeholder={t('apply.driver.step2.vehicleModelPlaceholder')}
-                required
-                value={values.vehicleModel}
-                error={errorFor('vehicleModel')}
-                onChange={(event) => setValue('vehicleModel', event.target.value)}
-              />
-
-              <TextField
-                label={t('apply.driver.step2.plateNumber')}
-                placeholder={t('apply.driver.step2.plateNumberPlaceholder')}
-                required
-                value={values.plateNumber}
-                error={errorFor('plateNumber')}
-                onChange={(event) => setValue('plateNumber', event.target.value)}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* ---------------- Step 3 — documents -------------------------- */}
-        {wizard.step === 2 && (
-          <div className={styles.fields}>
-            <div className={styles.uploads}>
-              <DocumentUpload
-                label={t('apply.driver.step3.nationalId')}
-                value={values.nationalId}
-                error={errorFor('nationalId')}
-                onChange={(name, file) => {
-                  files.current.nationalId = file;
-                  setValue('nationalId', name);
-                }}
-              />
-              <DocumentUpload
-                label={t('apply.driver.step3.license')}
-                value={values.license}
-                error={errorFor('license')}
-                onChange={(name, file) => {
-                  files.current.license = file;
-                  setValue('license', name);
-                }}
-              />
-              <DocumentUpload
-                label={t('apply.driver.step3.vehicleReg')}
-                value={values.vehicleReg}
-                error={errorFor('vehicleReg')}
-                onChange={(name, file) => {
-                  files.current.vehicleReg = file;
-                  setValue('vehicleReg', name);
-                }}
+              <TermsAgreement
+                checked={values.agreeTerms}
+                error={errorFor('agreeTerms')}
+                onChange={(checked) => setValue('agreeTerms', checked)}
               />
             </div>
 
-            <p className={styles.reviewLead}>{t('apply.driver.step3.hint')}</p>
-          </div>
-        )}
+            {submitError ? (
+              <p className={styles.error} role="alert">
+                <CloseIcon className={styles.errorIcon} />
+                {submitError}
+              </p>
+            ) : null}
 
-        {/* ---------------- Step 4 — experience ------------------------- */}
-        {wizard.step === 3 && (
-          <div className={styles.fields}>
-            <ChoiceGroup
-              legend={t('apply.driver.step4.experience')}
-              name="experience"
-              required
-              choices={experienceChoices}
-              value={values.experience}
-              error={errorFor('experience')}
-              onChange={(value) => setValue('experience', value)}
-            />
+            <div className={styles.footer}>
+              <Button
+                type="submit"
+                className={styles.footerPrimary}
+                loading={submission.isPending}
+                disabled={submission.isPending || photoUploading}
+              >
+                {t('apply.submit')}
+              </Button>
+            </div>
 
-            <ChoiceGroup
-              legend={t('apply.driver.step4.availability')}
-              name="availability"
-              required
-              choices={availabilityChoices}
-              value={values.availability}
-              error={errorFor('availability')}
-              onChange={(value) => setValue('availability', value)}
-            />
-
-            <TextAreaField
-              label={t('apply.driver.step4.notes')}
-              placeholder={t('apply.driver.step4.notesPlaceholder')}
-              optional
-              rows={4}
-              value={values.notes ?? ''}
-              error={errorFor('notes')}
-              onChange={(event) => setValue('notes', event.target.value)}
-            />
-          </div>
-        )}
-
-        {/* ---------------- Step 5 — review ----------------------------- */}
-        {wizard.step === 4 && (
-          <ApplySummary
-            rows={[
-              { label: t('apply.driver.step1.fullName'), value: values.fullName },
-              { label: t('apply.driver.step1.phone'), value: values.phone },
-              {
-                label: t('apply.driver.step1.city'),
-                value: cityOptions.find((city) => city.value === values.city)?.label ?? '',
-              },
-              { label: t('apply.driver.step1.birthDate'), value: values.birthDate },
-              {
-                label: t('apply.driver.step2.vehicleType'),
-                value: labelOf(vehicleChoices, values.vehicleType),
-              },
-              { label: t('apply.driver.step2.vehicleModel'), value: values.vehicleModel },
-              { label: t('apply.driver.step2.plateNumber'), value: values.plateNumber },
-              { label: t('apply.driver.step3.nationalId'), value: values.nationalId },
-              { label: t('apply.driver.step3.license'), value: values.license },
-              { label: t('apply.driver.step3.vehicleReg'), value: values.vehicleReg },
-              {
-                label: t('apply.driver.step4.experience'),
-                value: labelOf(experienceChoices, values.experience),
-              },
-              {
-                label: t('apply.driver.step4.availability'),
-                value: labelOf(availabilityChoices, values.availability),
-              },
-              { label: t('apply.driver.step4.notes'), value: values.notes ?? '' },
-            ]}
-          />
-        )}
-      </ApplyLayout>
+            <p className={styles.formNote}>{t('apply.driver.form.reviewNote')}</p>
+          </form>
+        </div>
+      </Section>
     </>
   );
+};
+
+/**
+ * Turns a submission failure into something the applicant can act on.
+ *
+ * 409 and 429 are the two the backend answers for reasons that are entirely
+ * about this person's situation — the number is already registered, or too many
+ * applications have come from this connection — and a generic "something went
+ * wrong" would send them round in circles retrying. Everything else genuinely
+ * is unexpected.
+ */
+const resolveSubmitError = (error: unknown, t: (key: string) => string): string => {
+  if (!RequestError.is(error)) return t('errors.generic');
+  if (error.status === 409) return t('errors.phoneRegistered');
+  // The throttle's message is already an Arabic sentence naming the wait.
+  if (error.isRateLimited) return error.message;
+  if (error.isNetworkError) return t('errors.network');
+  return t('errors.generic');
 };
 
 export default DriverApplyPage;

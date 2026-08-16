@@ -164,7 +164,11 @@ export const routeMeta: RouteMeta[] = [
     titleKey: 'apply.driver.title',
     descriptionKey: 'seo.applyDriver.description',
     sitemap: { include: true, priority: 0.8, changeFrequency: 'yearly' },
-    enabled: env.features.leadForms,
+    // NOT feature-flagged: the form submits to the live
+    // POST /public/applications (see features/apply/apply.api.ts), which
+    // creates the same pending_review account a mobile-app signup creates —
+    // unlike /public/leads and /public/contact, this has a working backend.
+    enabled: true,
     element: DriverApplyPage,
   },
   {
@@ -172,7 +176,7 @@ export const routeMeta: RouteMeta[] = [
     titleKey: 'apply.merchant.title',
     descriptionKey: 'seo.applyMerchant.description',
     sitemap: { include: true, priority: 0.8, changeFrequency: 'yearly' },
-    enabled: env.features.leadForms,
+    enabled: true,
     element: MerchantApplyPage,
   },
   {
@@ -182,7 +186,7 @@ export const routeMeta: RouteMeta[] = [
     // indexing it would put "تم استلام طلبك" in front of people who never
     // applied. It is reachable only by finishing a funnel.
     sitemap: { include: false },
-    enabled: env.features.leadForms,
+    enabled: true,
     element: ApplySuccessPage,
   },
   {

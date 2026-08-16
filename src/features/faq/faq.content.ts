@@ -35,7 +35,7 @@ const AR: FaqEntry[] = [
     category: 'general',
     question: 'ما هي المناطق التي يغطيها برق حالياً؟',
     answer:
-      'نعمل حالياً في محافظتي الديوانية والنجف، ونعمل على التوسع تدريجياً لتغطية محافظات عراقية إضافية.',
+      'نعمل حالياً في محافظات الديوانية والنجف والمثنى، ونعمل على التوسع تدريجياً لتغطية محافظات عراقية إضافية.',
   },
   {
     id: 'become-driver',
@@ -87,7 +87,7 @@ const EN: FaqEntry[] = [
     category: 'general',
     question: 'Which areas does Al-Barq currently cover?',
     answer:
-      'We currently operate in the Diwaniyah and Najaf governorates, and we are gradually expanding to more governorates across Iraq.',
+      'We currently operate in the Diwaniyah, Najaf and Muthanna governorates, and we are gradually expanding to more governorates across Iraq.',
   },
   {
     id: 'become-driver',

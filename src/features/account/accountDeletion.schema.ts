@@ -40,14 +40,17 @@ export const deleteAccountFormSchema = z.object({
 
 export type DeleteAccountFormValues = z.infer<typeof deleteAccountFormSchema>;
 
-/** What the backend returns once the account has been deactivated. */
+/**
+ * What the backend returns once the account has been deactivated.
+ *
+ * There is no erasure DATE to report: the account stops working at
+ * `deletedAt`, and its personal data is removed when the administration acts on
+ * the request from the panel — not on a timer. Printing a countdown the system
+ * does not actually run would be a promise nobody keeps.
+ */
 export const deletionReceiptSchema = z.object({
   /** When the account stopped working — i.e. now. */
   deletedAt: z.string(),
-  /** When the personal data is irreversibly scrubbed. */
-  purgeAt: z.string(),
-  /** Length of the grace window in days; printed rather than hardcoded here. */
-  graceDays: z.number(),
   role: z.enum(PUBLIC_ROLES),
 });
 

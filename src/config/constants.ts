@@ -13,13 +13,14 @@
 /* Governorates — mirrors delivery-backend/src/constants/governorates.js       */
 /* -------------------------------------------------------------------------- */
 
-export const GOVERNORATES = ['diwaniyah', 'najaf'] as const;
+export const GOVERNORATES = ['diwaniyah', 'najaf', 'muthanna'] as const;
 
 export type Governorate = (typeof GOVERNORATES)[number];
 
 export const GOVERNORATE_LABELS: Record<Governorate, string> = {
   diwaniyah: 'الديوانية',
   najaf: 'النجف',
+  muthanna: 'المثنى - السماوة',
 };
 
 export const isGovernorate = (value: unknown): value is Governorate =>

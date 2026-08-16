@@ -22,6 +22,7 @@ export type AnalyticsEvent =
   | { name: 'cta_click'; id: string; location: string }
   | { name: 'app_download_click'; platform: 'ios' | 'android' | 'apk' }
   | { name: 'lead_submitted'; role: 'merchant' | 'driver' }
+  | { name: 'application_submitted'; role: 'merchant' | 'driver' }
   | { name: 'contact_submitted' }
   | { name: 'order_tracked'; found: boolean }
   | { name: 'language_changed'; to: string };

@@ -95,14 +95,12 @@ export const DeleteAccountPage = () => {
                 <dd>{formatDate(receipt.deletedAt, language)}</dd>
               </div>
               <div className={styles.receiptRow}>
-                <dt>{t('account.delete.done.purgeLabel')}</dt>
-                <dd>{formatDate(receipt.purgeAt, language)}</dd>
+                <dt>{t('account.delete.done.statusLabel')}</dt>
+                <dd>{t('account.delete.done.statusValue')}</dd>
               </div>
             </dl>
 
-            <p className={styles.receiptNote}>
-              {t('account.delete.done.undoNote', { days: receipt.graceDays })}
-            </p>
+            <p className={styles.receiptNote}>{t('account.delete.done.undoNote')}</p>
 
             <Link to={paths.home} className={styles.backLink}>
               {t('common.backHome')}

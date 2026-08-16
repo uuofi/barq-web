@@ -19,9 +19,10 @@ import {
   ChoiceGroup,
   type Choice,
 } from '@/components/ui';
-import { useSubmitLead } from '@/features/contact/useContactForm';
+import { RequestError } from '@/lib/http/RequestError';
 import ApplyLayout, { ApplySummary, applyStyles as styles } from './ApplyLayout';
 import useWizard from './useWizard';
+import { useRegisterMerchant } from './useApplyRegistration';
 import { MERCHANT_STEP_SCHEMAS, type MerchantApplication } from './apply.schema';
 
 const INITIAL: MerchantApplication = {
@@ -31,6 +32,8 @@ const INITIAL: MerchantApplication = {
   email: undefined,
   city: '',
   address: '',
+  password: '',
+  confirmPassword: '',
   businessType: '',
   ordersPerDay: '',
 };
@@ -46,7 +49,7 @@ const INITIAL: MerchantApplication = {
 export const MerchantApplyPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const submission = useSubmitLead();
+  const submission = useRegisterMerchant();
   const [submitError, setSubmitError] = useState<string | undefined>();
 
   const wizard = useWizard<MerchantApplication>({
@@ -87,11 +90,24 @@ export const MerchantApplyPage = () => {
         role: 'merchant',
         name: values.ownerName,
         phone: values.phone,
-        businessName: values.businessName,
+        password: values.password,
+        email: values.email,
+        governorate: values.city,
+        merchant: {
+          storeName: values.businessName,
+          addressText: values.address,
+          businessType: values.businessType,
+          estimatedOrdersPerDay: Number.parseInt(values.ordersPerDay, 10),
+        },
       });
       navigate(paths.apply.success, { replace: true, state: { role: 'merchant' } });
-    } catch {
-      setSubmitError(t('errors.generic'));
+    } catch (error) {
+      // 409 = this phone already has an account (auth.service.js#register).
+      setSubmitError(
+        error instanceof RequestError && error.status === 409
+          ? t('errors.phoneRegistered')
+          : t('errors.generic')
+      );
     }
   };
 
@@ -172,7 +188,7 @@ export const MerchantApplyPage = () => {
 
               <SelectField
                 label={t('apply.merchant.step1.city')}
-                placeholder={t('apply.driver.step1.cityPlaceholder')}
+                placeholder={t('apply.merchant.step1.cityPlaceholder')}
                 required
                 options={cityOptions}
                 value={values.city}
@@ -191,6 +207,30 @@ export const MerchantApplyPage = () => {
               error={errorFor('address')}
               onChange={(event) => setValue('address', event.target.value)}
             />
+
+            <div className={styles.row}>
+              <TextField
+                label={t('apply.merchant.step1.password')}
+                placeholder={t('apply.merchant.step1.passwordPlaceholder')}
+                required
+                type="password"
+                autoComplete="new-password"
+                hint={t('apply.merchant.step1.passwordHint')}
+                value={values.password}
+                error={errorFor('password')}
+                onChange={(event) => setValue('password', event.target.value)}
+              />
+
+              <TextField
+                label={t('apply.merchant.step1.confirmPassword')}
+                required
+                type="password"
+                autoComplete="new-password"
+                value={values.confirmPassword}
+                error={errorFor('confirmPassword')}
+                onChange={(event) => setValue('confirmPassword', event.target.value)}
+              />
+            </div>
           </div>
         )}
 

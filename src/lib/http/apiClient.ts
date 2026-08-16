@@ -22,6 +22,13 @@ import { RequestError, NETWORK_ERROR_STATUS, type ApiFailurePayload } from './Re
 
 const REQUEST_TIMEOUT_MS = 15_000;
 
+/**
+ * Uploads get their own, longer budget. A 5MB photo taken on a phone camera
+ * over a weak mobile connection routinely takes longer than 15s, and timing it
+ * out means the applicant retakes a picture that was actually fine.
+ */
+const UPLOAD_TIMEOUT_MS = 60_000;
+
 export const apiClient: AxiosInstance = axios.create({
   baseURL: env.apiBaseUrl,
   timeout: REQUEST_TIMEOUT_MS,
@@ -128,6 +135,29 @@ export const http = {
 
   post: <T>(url: string, body: unknown, schema: OutputSchema<T>, config?: AxiosRequestConfig) =>
     request<T>({ ...config, url, method: 'POST', data: body }, schema),
+
+  /**
+   * Multipart POST for file uploads (the driver-application photo).
+   *
+   * Clearing `Content-Type` is REQUIRED, not tidiness. This instance defaults
+   * to `application/json`, and axios reacts to a JSON content type on a
+   * FormData body by serialising the form to JSON — the request would arrive
+   * with no file at all and multer would report none. Setting the header to
+   * `null` drops it, which then lets the browser write
+   * `multipart/form-data; boundary=…` with the boundary token the parser needs.
+   */
+  postForm: <T>(url: string, form: FormData, schema: OutputSchema<T>, config?: AxiosRequestConfig) =>
+    request<T>(
+      {
+        timeout: UPLOAD_TIMEOUT_MS,
+        ...config,
+        url,
+        method: 'POST',
+        data: form,
+        headers: { ...config?.headers, 'Content-Type': null },
+      },
+      schema
+    ),
 };
 
 export default apiClient;
