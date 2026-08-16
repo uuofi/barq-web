@@ -14,7 +14,22 @@
     <title>برق — سريع. آمن. موثوق</title>
     <meta name="description" content="منصة برق للتوصيل — اطلب سائقاً، أدر متجرك، وتابع طلباتك لحظة بلحظة." />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!--
+      Brand icons. All of these are generated from ONE source file
+      (src/assets/brand/app-icon.png — the same mark the mobile apps ship) by
+      `npm run icons`; never hand-edit the files in public/.
+
+      `favicon.ico` is listed first and with `sizes="any"`: it is what search
+      crawlers and older browsers fetch, and Google reads it for the icon
+      beside a result. The PNGs are what modern browsers prefer for the tab.
+      The rel=icon tags below are not redundant even though /favicon.ico is
+      found by convention — a crawler that reads the HTML should not have to
+      guess.
+    -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
